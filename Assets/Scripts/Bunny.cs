@@ -17,12 +17,15 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
 
     void FixedUpdate() {
         bool grounded = isGrounded();
-        if (grounded)
+        if (grounded) {
             timeOnGround += Time.fixedDeltaTime;
-        else
+        } else {
             timeOnGround = 0f;
-        if (timeOnGround > 0.5f)
+        }
+
+        if (timeOnGround > 0.5f) {
             Jump();
+        }
         //Debug.Log("Grounded: " + grounded + " Time on ground: " + timeOnGround);
 
     }
@@ -31,8 +34,10 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
         var origin = transform.position + new Vector3(0, -0.5f, 0);
         var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, environmentLayer);
         Debug.DrawRay(origin, Vector2.down * 0.1f, Color.red);
-        if (hit.collider != null)
+        if (hit.collider != null) {
             return true;
+        }
+
         return false;
     }
 
