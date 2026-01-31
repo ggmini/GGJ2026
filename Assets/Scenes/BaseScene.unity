@@ -1622,14 +1622,14 @@ PrefabInstance:
       propertyPath: OM
       value: 
       objectReference: {fileID: 405575775}
+    - target: {fileID: 5685959777751371235, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+      propertyPath: moveAction
+      value: 
+      objectReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
     - target: {fileID: 6272508456814684472, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
       propertyPath: GM
       value: 
       objectReference: {fileID: 405575777}
-    - target: {fileID: 6582628406689514917, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6582628406689514917, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

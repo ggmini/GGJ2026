@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
-sealed class Player : MonoBehaviour
-{
+sealed class Player : MonoBehaviour {
     Rigidbody2D rb;
     [SerializeField]
     CircleCollider2D upperCollider;
@@ -17,13 +17,13 @@ sealed class Player : MonoBehaviour
     float moveSpeed = 500f;
     float sprintModifier = 1.5f;
     bool isSprinting = false;
-    bool airborne = false;
-    public bool Airborne { get => airborne; }
-    bool canDoubleJump = false;
-    public bool CanDoubleJump { get => canDoubleJump; }
+
+    [field: SerializeField]
+    public bool Airborne { get; private set; } = false;
+    public bool CanDoubleJump { get; private set; } = false;
     float maxJumpVelocity = 10f;
-    float maxJumpTime = 0.75f;
-    public float MaxJumpTime { get => maxJumpTime; }
+
+    public float MaxJumpTime { get; } = 0.75f;
     float playerWidth = 0.5f;
 
     int health = 10;
@@ -36,48 +36,92 @@ sealed class Player : MonoBehaviour
     }
 
     void FixedUpdate() {
+        PerformMove();
+
+        CheckFloor();
+
+        rb.gravityScale = (isJumping, Airborne) switch {
+            (true, _) => 0.75f,
+            (_, true) => 1,
+            _ => 1,
+        };
+
         if (!dead) {
-            if (rb.position.y < -10f)
+            if (rb.position.y < -10f) {
                 Die();
+            }
         }
     }
 
     public void CheckFloor() {
         //TODO: Adjust playerWidth based on player size
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
+        var hitLeft = Physics2D.Raycast(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
+        var hitRight = Physics2D.Raycast(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
         //Debug.DrawRay(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
         //Debug.DrawRay(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
         if (hitLeft.collider != null || hitRight.collider != null) {
-            airborne = false;
-            canDoubleJump = true;
-        } else
-            airborne = true;
+            Airborne = false;
+            CanDoubleJump = true;
+        } else {
+            Airborne = true;
+        }
     }
 
+    [SerializeField]
+    float runAccelerationTime = 0.1f;
+    [SerializeField]
+    float jumpAccelerationTime = 0.2f;
+    [SerializeField]
+    float fallAccelerationTime = 0.3f;
+
+    float moveIntention;
+    Vector2 acceleration;
+
     public void Move(float xDir) {
-        float velocity = isSprinting ? moveSpeed * sprintModifier : moveSpeed;
-        rb.linearVelocity = new Vector2(xDir * velocity * Time.fixedDeltaTime, rb.linearVelocity.y);
-        if (xDir != 0) {
-            int lookDir = xDir > 0 ? 1 : -1;
-            transform.localScale = new Vector3(lookDir, 1, 1);
+        moveIntention = xDir * (isSprinting ? moveSpeed * sprintModifier : moveSpeed);
+    }
+
+    void PerformMove() {
+        var targetVelocity = new Vector2(moveIntention * Time.fixedDeltaTime, rb.linearVelocity.y);
+        float smoothTime = (isJumping, Airborne) switch {
+            (true, _) => jumpAccelerationTime,
+            (_, true) => fallAccelerationTime,
+            _ => runAccelerationTime,
+        };
+        rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref acceleration, smoothTime);
+
+        float moveSign = Math.Sign(moveIntention);
+        switch (moveSign) {
+            case > 0:
+                animator.isFacingLeft = false;
+                break;
+            case < 0:
+                animator.isFacingLeft = true;
+                break;
         }
-        if (airborne)
-            animator.Jump();
-        else if (xDir != 0)
-            animator.Run();            
-        else
-            animator.Idle();     
+
+        switch ((isJumping, Airborne, moveSign)) {
+            case (true, _, _):
+                animator.Jump();
+                break;
+            case (_, true, _):
+                animator.Fall();
+                break;
+            case (_, _, 0):
+                animator.Idle();
+                break;
+            default:
+                animator.Run();
+                break;
+        }
     }
 
     public void SetSprinting(bool sprinting) {
         isSprinting = sprinting;
-    } 
+    }
 
-    public void Jump(float timeJumpPressed) {
-        float jumpVelocity = maxJumpVelocity;
-        jumpVelocity *= maxJumpTime - (timeJumpPressed / maxJumpTime);
-        rb.linearVelocityY = jumpVelocity;
+    public void Jump() {
+        rb.linearVelocityY = maxJumpVelocity;
     }
 
     public void Crouch() {
@@ -95,20 +139,32 @@ sealed class Player : MonoBehaviour
         animator.Idle();
     }
 
-    public bool TryJump() {
-        if (!airborne)
-            return true;
-        else if (canDoubleJump) {
-            canDoubleJump = false;
-            return true;
+    public bool isJumping => rb.linearVelocity.y > 0;
+
+    public void StartJump() {
+        if (!Airborne) {
+            Jump();
+            return;
         }
-        return false;
+
+        if (CanDoubleJump) {
+            CanDoubleJump = false;
+        }
+    }
+
+    public void CancelJump() {
+        if (!isJumping) {
+            return;
+        }
+
+        rb.linearVelocityY *= 0.25f;
     }
 
     public void TakeDamage(int damage) {
         health -= damage;
-        if (health <= 0)
+        if (health <= 0) {
             Die();
+        }
     }
 
     void Die() {
@@ -121,5 +177,4 @@ sealed class Player : MonoBehaviour
         yield return new WaitForSeconds(1.6f);
         GM.ReloadScene();
     }
-
 }

@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 sealed class PlayerController : MonoBehaviour {
 
     public InputActionAsset actions;
-    InputAction moveAction;
+    [SerializeField]
+    InputActionReference moveAction;
     InputAction jumpAction;
     InputAction switchMaskAction;
     InputAction maskAbilityAction;
@@ -16,20 +17,16 @@ sealed class PlayerController : MonoBehaviour {
     LayerMask environmentLayer;
 
     public ObjectManager OM;
-    
+
     [SerializeField]
-    List<Mask> masks = new List<Mask>();
+    List<Mask> masks = new();
     Mask currentMask;
     int currentMaskIndex = 0;
-
-    float timeJumpPressed = 0f;
-    bool jumping = false;
 
     [SerializeField]
     Player player;
 
     void Awake() {
-        moveAction = actions.FindActionMap("Player").FindAction("Move");
         switchMaskAction = actions.FindActionMap("Player").FindAction("SwitchMask");
         jumpAction = actions.FindActionMap("Player").FindAction("Jump");
         maskAbilityAction = actions.FindActionMap("Player").FindAction("MaskAbility");
@@ -38,12 +35,14 @@ sealed class PlayerController : MonoBehaviour {
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() {
+    void OnEnable() {
         currentMask = masks[0];
         currentMaskIndex = 0;
 
-        jumpAction.performed += JumpAction;
-        jumpAction.canceled += JumpAction;
+        moveAction.action.performed += Move;
+        moveAction.action.canceled += Move;
+        jumpAction.performed += JumpActionPerformed;
+        jumpAction.canceled += JumpActionCancel;
         switchMaskAction.performed += SwitchMask;
         maskAbilityAction.performed += ActivateMaskAbility;
         crouchAction.performed += CrouchAction;
@@ -51,43 +50,41 @@ sealed class PlayerController : MonoBehaviour {
         sprintAction.performed += context => player.SetSprinting(true);
         sprintAction.canceled += context => player.SetSprinting(false);
     }
-
-    // Update is called once per frame
-    void FixedUpdate() {
-        Move();
-        if(jumping) {
-            if (timeJumpPressed < player.MaxJumpTime)
-                player.Jump(timeJumpPressed);
-            timeJumpPressed += Time.fixedDeltaTime;
-        }
-        player.CheckFloor();
+    void OnDisable() {
+        moveAction.action.performed -= Move;
+        moveAction.action.canceled -= Move;
+        jumpAction.performed -= JumpActionPerformed;
+        jumpAction.canceled -= JumpActionCancel;
+        switchMaskAction.performed -= SwitchMask;
+        maskAbilityAction.performed -= ActivateMaskAbility;
+        crouchAction.performed -= CrouchAction;
+        crouchAction.canceled -= CrouchAction;
+        sprintAction.performed -= context => player.SetSprinting(true);
+        sprintAction.canceled -= context => player.SetSprinting(false);
     }
 
-    
-
-    void Move() {
-        float dir = moveAction.ReadValue<Vector2>().x;
+    void Move(InputAction.CallbackContext context) {
+        float dir = context.ReadValue<Vector2>().x;
         player.Move(dir);
     }
 
-    void JumpAction(InputAction.CallbackContext context) {
-        if (context.performed) {
-            if (player.TryJump()) {
-                jumping = true;
-            }
-        } else if (context.canceled) {
-            timeJumpPressed = 0f;
-            jumping = false;
-        }
+    void JumpActionPerformed(InputAction.CallbackContext context) {
+        player.StartJump();
+    }
+
+    void JumpActionCancel(InputAction.CallbackContext context) {
+        player.CancelJump();
     }
 
     public void SwitchMask(InputAction.CallbackContext context) {
         if (context.performed) {
             currentMask.DeactivateMask();
-            if (currentMaskIndex + 1 == masks.Count)
+            if (currentMaskIndex + 1 == masks.Count) {
                 currentMaskIndex = 0;
-            else
+            } else {
                 currentMaskIndex += 1;
+            }
+
             currentMask = masks[currentMaskIndex];
             currentMask.ActivateMask();
             OM.switchMask(currentMask.VisibleLayer);
@@ -95,14 +92,16 @@ sealed class PlayerController : MonoBehaviour {
     }
 
     public void ActivateMaskAbility(InputAction.CallbackContext context) {
-        if (context.performed) 
+        if (context.performed) {
             currentMask.ActivateAbility();
+        }
     }
 
     public void CrouchAction(InputAction.CallbackContext context) {
-        if (context.performed)
+        if (context.performed) {
             player.Crouch();
-        else if (context.canceled)
+        } else if (context.canceled) {
             player.Uncrouch();
+        }
     }
 }
