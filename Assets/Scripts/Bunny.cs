@@ -1,5 +1,4 @@
 using UnityEngine;
-using static Codice.Client.Common.EventTracking.TrackFeatureUseEvent.Features.DesktopGUI.Filters;
 
 sealed class NewMonoBehaviourScript : MonoBehaviour {
 
@@ -17,14 +16,14 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        var grounded = isGrounded();
+        bool grounded = isGrounded();
         if (grounded)
             timeOnGround += Time.fixedDeltaTime;
         else
             timeOnGround = 0f;
         if (timeOnGround > 0.5f)
             Jump();
-        Debug.Log("Grounded: " + grounded + " Time on ground: " + timeOnGround);
+        //Debug.Log("Grounded: " + grounded + " Time on ground: " + timeOnGround);
 
     }
 
