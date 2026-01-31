@@ -13,7 +13,10 @@ sealed class Player : MonoBehaviour {
     LayerMask environmentLayer;
     [SerializeField]
     float moveSpeed = 500f;
-    float sprintModifier = 1f;
+    [SerializeField]
+    float sprintModifier = 1.5f;
+    [SerializeField]
+    bool isSprinting = false;
 
     [field: SerializeField]
     public bool Airborne { get; private set; } = false;
@@ -44,12 +47,6 @@ sealed class Player : MonoBehaviour {
 
         CheckFloor();
 
-        rb.gravityScale = (isJumping, Airborne) switch {
-            (true, _) => 0.75f,
-            (_, true) => 1,
-            _ => 1,
-        };
-
         if (!dead) {
             if (rb.position.y < -10f) {
                 Die();
@@ -79,20 +76,31 @@ sealed class Player : MonoBehaviour {
     float fallAccelerationTime = 0.3f;
 
     float moveIntention;
-    Vector2 acceleration;
+    float acceleration;
 
     public void Move(float xDir) {
         moveIntention = xDir * moveSpeed;
     }
 
     void PerformMove() {
-        var targetVelocity = new Vector2(moveIntention * Time.fixedDeltaTime * sprintModifier, rb.linearVelocity.y);
+        float targetVelocity = moveIntention;
+        if (isSprinting) {
+            targetVelocity *= sprintModifier;
+        }
+
         float smoothTime = (isJumping, Airborne) switch {
             (true, _) => jumpAccelerationTime,
             (_, true) => fallAccelerationTime,
             _ => runAccelerationTime,
         };
-        rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref acceleration, smoothTime);
+        rb.linearVelocityX = Mathf.SmoothDamp(rb.linearVelocityX, targetVelocity, ref acceleration, smoothTime);
+
+        float gravityScale = (isJumping, Airborne) switch {
+            (true, _) => 0.75f,
+            (_, true) => 1,
+            _ => 1,
+        };
+        rb.linearVelocity += gravityScale * Time.deltaTime * Physics2D.gravity;
 
         float moveSign = Math.Sign(moveIntention);
         switch (moveSign) {
@@ -139,7 +147,7 @@ sealed class Player : MonoBehaviour {
         animator.isUpright = true;
     }
 
-    public bool isJumping => rb.linearVelocity.y > 0;
+    public bool isJumping => rb.linearVelocityY > 0;
 
     public void StartJump() {
         if (!Airborne) {
@@ -161,11 +169,11 @@ sealed class Player : MonoBehaviour {
     }
 
     public void StartSprint() {
-        sprintModifier = 1.5f;
+        isSprinting = true;
     }
 
     public void StopSprint() {
-        sprintModifier = 1f;
+        isSprinting = false;
     }
 
     public void TakeDamage(int damage) {

@@ -330,7 +330,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -426,11 +426,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   upperCollider: {fileID: 3263337217702278003}
   animator: {fileID: 724742473396120707}
-  GM: {fileID: 0}
   environmentLayer:
     serializedVersion: 2
     m_Bits: 128
-  moveSpeed: 500
+  moveSpeed: 10
+  sprintModifier: 1.5
+  isSprinting: 0
   <Airborne>k__BackingField: 0
   defaultMaskPercentage: 0
   ratMaskPercentage: 0

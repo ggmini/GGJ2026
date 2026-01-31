@@ -809,7 +809,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4424332906037017816, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
       propertyPath: orthographic size
-      value: 4.640625
+      value: 5.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424332906037017816, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.2627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424332906037017816, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.22352941
+      objectReference: {fileID: 0}
+    - target: {fileID: 4424332906037017816, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.20392157
       objectReference: {fileID: 0}
     - target: {fileID: 7143382563558903430, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
       propertyPath: m_LocalPosition.y
