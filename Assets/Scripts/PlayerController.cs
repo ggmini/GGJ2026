@@ -6,6 +6,8 @@ sealed class PlayerController : MonoBehaviour {
 
     [Header("Input Actions")]
     [SerializeField]
+    InputActionAsset inputs;
+    [SerializeField]
     InputActionReference moveAction;
     [SerializeField]
     InputActionReference jumpAction;
@@ -37,6 +39,8 @@ sealed class PlayerController : MonoBehaviour {
         currentMask = masks[0];
         currentMaskIndex = 0;
 
+        inputs.Enable();
+
         moveAction.action.performed += Move;
         moveAction.action.canceled += Move;
         jumpAction.action.performed += JumpActionPerformed;
@@ -48,6 +52,7 @@ sealed class PlayerController : MonoBehaviour {
         sprintAction.action.performed += SprintAction;
         sprintAction.action.canceled += StopSprintAction;
     }
+
     void OnDisable() {
         moveAction.action.performed -= Move;
         moveAction.action.canceled -= Move;
@@ -59,6 +64,8 @@ sealed class PlayerController : MonoBehaviour {
         crouchAction.action.canceled -= UncrouchAction;
         sprintAction.action.performed -= SprintAction;
         sprintAction.action.canceled -= StopSprintAction;
+
+        inputs.Disable();
     }
 
     void Move(InputAction.CallbackContext context) {

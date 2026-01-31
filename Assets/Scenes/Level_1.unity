@@ -7968,14 +7968,6 @@ PrefabInstance:
       propertyPath: flashAnimation.m_Curve.Array.data[1].outWeight
       value: 0.4601341
       objectReference: {fileID: 0}
-    - target: {fileID: 5685959777751371235, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
-      propertyPath: OM
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5685959777751371235, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
-      propertyPath: moveAction
-      value: 
-      objectReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
     - target: {fileID: 6272508456814684472, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
       propertyPath: GM
       value: 

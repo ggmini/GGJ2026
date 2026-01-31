@@ -354,10 +354,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52b8e0c9a2747649a31c3fbb3e00191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  jumpAction: {fileID: -2099379676528639254, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  crouchAction: {fileID: 7040659881675835329, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  sprintAction: {fileID: -7471211009204490832, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  inputs: {fileID: -944628639613478452, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
+  moveAction: {fileID: -1680190386980627800, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
+  jumpAction: {fileID: -2099379676528639254, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
+  crouchAction: {fileID: 7040659881675835329, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
+  sprintAction: {fileID: -7471211009204490832, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
   environmentLayer:
     serializedVersion: 2
     m_Bits: 128
