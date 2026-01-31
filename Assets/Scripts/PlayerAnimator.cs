@@ -1,65 +1,21 @@
-using System.Collections.Generic;
-using System.Linq;
-using MyBox;
 using UnityEngine;
 
 sealed class PlayerAnimator : MonoBehaviour {
     [SerializeField]
     Animator animator;
 
-    IEnumerable<Animator> animators {
-        get {
-            yield return animator;
-
-            if (defaultMask) {
-                yield return defaultMask.animator;
-            }
-
-            if (mouseMask) {
-                yield return mouseMask.animator;
-            }
-
-            if (bunnyMask) {
-                yield return bunnyMask.animator;
-            }
-        }
-    }
-
     [SerializeField]
     SpriteRenderer sprite;
 
-    IEnumerable<SpriteRenderer> sprites {
-        get {
-            yield return sprite;
-
-            if (defaultMask) {
-                yield return defaultMask.sprite;
-            }
-
-            if (mouseMask) {
-                yield return mouseMask.sprite;
-            }
-
-            if (bunnyMask) {
-                yield return bunnyMask.sprite;
-            }
-        }
-    }
+    [SerializeField]
+    SpriteRenderer mask;
 
     [SerializeField]
     public bool isUpright = true;
 
-    [Space]
-    [SerializeField]
-    MaskAnimator defaultMask;
-    [SerializeField]
-    MaskAnimator mouseMask;
-    [SerializeField]
-    MaskAnimator bunnyMask;
-
     public bool isFacingLeft {
-        get => sprites.First().flipX;
-        set => sprites.ForEach(s => s.flipX = value);
+        get => sprite.flipX;
+        set => sprite.flipX = value;
     }
 
     [ContextMenu(nameof(TurnAround))]
@@ -69,7 +25,7 @@ sealed class PlayerAnimator : MonoBehaviour {
 
     void Play(string animation) {
         string anim = isUpright ? $"{STATE_UPRIGHT}_{animation}" : $"{STATE_DUCKED}_{animation}";
-        animators.ForEach(a => a.Play(anim, 0));
+        animator.Play(anim, 0);
     }
 
     const string STATE_UPRIGHT = "upright";
@@ -120,16 +76,8 @@ sealed class PlayerAnimator : MonoBehaviour {
     }
 
     public void SetMaskRatios(float defaultVisibility, float mouseVisibility, float bunnyVisibility) {
-        if (defaultMask) {
-            defaultMask.visibility = defaultVisibility;
-        }
-
-        if (mouseMask) {
-            mouseMask.visibility = mouseVisibility;
-        }
-
-        if (bunnyMask) {
-            bunnyMask.visibility = bunnyVisibility;
-        }
+        mask.material.SetFloat("_Default", defaultVisibility);
+        mask.material.SetFloat("_Mouse", mouseVisibility);
+        mask.material.SetFloat("_Bunny", bunnyVisibility);
     }
 }

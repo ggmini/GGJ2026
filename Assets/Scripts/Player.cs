@@ -83,7 +83,7 @@ sealed class Player : MonoBehaviour
         upperCollider.enabled = false;
         lowerCollider.size = new Vector2(1, 0.25f);
         lowerCollider.offset = new Vector2(0, -0.375f);
-        //animator.Crouch();
+        animator.isUpright = false;
     }
 
     public void Uncrouch() {
