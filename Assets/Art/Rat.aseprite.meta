@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 553cbe00b069cbd4db477858425a95b5
+guid: 35e77101aedfbf540850ea2cac09e6dd
 importerOverride:
   nativeImporterType: 2089858483
   scriptedImporterType:
@@ -24,7 +24,7 @@ ScriptedImporter:
       type: {class: AsepriteAnimatorProcessor, ns: Slothsoft.Aseprite.Editor, asm: Slothsoft.Aseprite.Editor}
       data:
         key: animator
-        includeEmptyAnimations: 1
+        includeEmptyAnimations: 0
         importAsAnimator: 1
         importAsAnimatorOverride: 0
         referenceController: {instanceID: 0}
