@@ -33,30 +33,67 @@ sealed class Player : MonoBehaviour {
     int health = 10;
     bool dead = false;
 
-    [Header("Mask Percentages")]
-    public float DefaultMaskPercentage { get; private set; } = 1f;
-    public float RatMaskPercentage { get; private set; } = 0f;
-    public float BunnyMaskPercentage { get; private set; } = 0f;
-    void Awake() {
-        instance = this;
+    float _defaultMask = 1;
+    public float DefaultMaskPercentage {
+        get => _defaultMask;
+        set {
+            _defaultMask = Mathf.Clamp01(value);
+
+            if (Mathf.Approximately(_defaultMask, 1)) {
+                activeMask = MaskType.Default;
+                _mouseMask = 0;
+                _bunnyMask = 0;
+            }
+
+            animator.SetMaskRatios(DefaultMaskPercentage, MouseMaskPercentage, BunnyMaskPercentage);
+        }
     }
-    public enum MaskType {
-        Default,
-        Rat,
-        Bunny
+
+    float _mouseMask = 0;
+    public float MouseMaskPercentage {
+        get => _mouseMask;
+        set {
+            _mouseMask = Mathf.Clamp01(value);
+
+            if (Mathf.Approximately(_mouseMask, 1)) {
+                activeMask = MaskType.Mouse;
+                _defaultMask = 0;
+                _bunnyMask = 0;
+            }
+
+            animator.SetMaskRatios(DefaultMaskPercentage, MouseMaskPercentage, BunnyMaskPercentage);
+        }
     }
+
+    float _bunnyMask = 0;
+    public float BunnyMaskPercentage {
+        get => _bunnyMask;
+        set {
+            _bunnyMask = Mathf.Clamp01(value);
+
+            if (Mathf.Approximately(_bunnyMask, 1)) {
+                activeMask = MaskType.Bunny;
+                _defaultMask = 0;
+                _mouseMask = 0;
+            }
+
+            animator.SetMaskRatios(DefaultMaskPercentage, MouseMaskPercentage, BunnyMaskPercentage);
+        }
+    }
+
+    [field: SerializeField]
     public MaskType activeMask { get; private set; } = MaskType.Default;
 
     [SerializeField]
     float maskIncreaseAmount = 0.2f;
 
+    void Awake() {
+        instance = this;
+    }
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         lowerCollider = GetComponent<BoxCollider2D>();
-    }
-
-    void Update() {
-        //TODO: alter mask shader here based on mask percentages
     }
 
     void FixedUpdate() {
@@ -67,14 +104,24 @@ sealed class Player : MonoBehaviour {
         if (!dead) {
             if (rb.position.y < -10f) {
                 Die();
+                return;
             }
         }
 
-        //TODO: there must a better way of doing this
-        if (crouched && moveIntention != 0) {
-            IncreaseRatMask();
-        } else if (isJumping && moveIntention != 0) {
-            IncreaseBunnyMask();
+        switch ((isJumping, Airborne, crouched, isSprinting, Math.Abs(rb.linearVelocityX))) {
+            case (true, _, false, _, _):
+                IncreaseBunnyMask(1.5f);
+                break;
+            case (_, true, false, _, _):
+                break;
+            case (_, _, true, true, > 0):
+                IncreaseMouseMask();
+                break;
+            case (_, _, true, _, _):
+                break;
+            default:
+                IncreaseDefaultMask(0.5f);
+                break;
         }
     }
 
@@ -230,47 +277,27 @@ sealed class Player : MonoBehaviour {
         GameManager.ReloadScene();
     }
 
-    void IncreaseRatMask() {
-        if (RatMaskPercentage == 1f) {
-            return;
-        }
+    void IncreaseDefaultMask(float multiplier = 1) {
+        float amount = maskIncreaseAmount * Time.deltaTime * multiplier;
 
-        RatMaskPercentage += maskIncreaseAmount;
-        DefaultMaskPercentage -= maskIncreaseAmount / 2;
-        BunnyMaskPercentage -= maskIncreaseAmount / 2;
-
-        if (DefaultMaskPercentage < 0f) {
-            BunnyMaskPercentage -= DefaultMaskPercentage;
-            DefaultMaskPercentage = 0f;
-        } else if (BunnyMaskPercentage < 0f) {
-            DefaultMaskPercentage -= BunnyMaskPercentage;
-            BunnyMaskPercentage = 0f;
-        }
-
-        if (RatMaskPercentage == 1f) {
-            activeMask = MaskType.Rat;
-        }
+        MouseMaskPercentage -= amount / 2;
+        BunnyMaskPercentage -= amount / 2;
+        DefaultMaskPercentage += amount;
     }
 
-    void IncreaseBunnyMask() {
-        if (BunnyMaskPercentage == 1f) {
-            return;
-        }
+    void IncreaseMouseMask(float multiplier = 1) {
+        float amount = maskIncreaseAmount * Time.deltaTime * multiplier;
 
-        BunnyMaskPercentage += maskIncreaseAmount;
-        DefaultMaskPercentage -= maskIncreaseAmount / 2;
-        RatMaskPercentage -= maskIncreaseAmount / 2;
+        DefaultMaskPercentage -= amount / 2;
+        BunnyMaskPercentage -= amount / 2;
+        MouseMaskPercentage += amount;
+    }
 
-        if (DefaultMaskPercentage < 0f) {
-            RatMaskPercentage -= DefaultMaskPercentage;
-            DefaultMaskPercentage = 0f;
-        } else if (RatMaskPercentage < 0f) {
-            DefaultMaskPercentage -= RatMaskPercentage;
-            RatMaskPercentage = 0f;
-        }
+    void IncreaseBunnyMask(float multiplier = 1) {
+        float amount = maskIncreaseAmount * Time.deltaTime * multiplier;
 
-        if (BunnyMaskPercentage == 1f) {
-            activeMask = MaskType.Bunny;
-        }
+        DefaultMaskPercentage -= amount / 2;
+        MouseMaskPercentage -= amount / 2;
+        BunnyMaskPercentage += amount;
     }
 }

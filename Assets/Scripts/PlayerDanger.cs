@@ -11,16 +11,21 @@ sealed class PlayerDanger : MonoBehaviour {
     TileBase normalTile;
 
     [SerializeField]
+    MaskType immuneMask = default;
+    [SerializeField]
     bool isDangerous = false;
 
     void Start() {
         UpdateTiles();
     }
 
-    void Update() {
+    void FixedUpdate() {
         if (Player.instance) {
-            //isDangerous = !isDangerous;
-            //UpdateTiles();
+            bool isDangerousNow = Player.instance.activeMask != immuneMask;
+            if (isDangerous != isDangerousNow) {
+                isDangerous = isDangerousNow;
+                UpdateTiles();
+            }
         }
     }
 

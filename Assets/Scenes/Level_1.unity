@@ -7722,6 +7722,7 @@ MonoBehaviour:
   tilemap: {fileID: 758622731}
   dangerTile: {fileID: 11400000, guid: bdfb2f2a49ec16a4ea372851169dfd96, type: 2}
   normalTile: {fileID: 11400000, guid: 6d7110a3b26e11f4dbba5e22ded4e890, type: 2}
+  immuneMask: 2
   isDangerous: 1
 --- !u!1 &1734071734
 GameObject:

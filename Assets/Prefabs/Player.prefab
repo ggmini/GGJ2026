@@ -434,6 +434,8 @@ MonoBehaviour:
   sprintModifier: 1.75
   isSprinting: 0
   <Airborne>k__BackingField: 0
+  <activeMask>k__BackingField: 0
+  maskIncreaseAmount: 0.7
   runAccelerationTime: 0.1
   jumpAccelerationTime: 0.2
   fallAccelerationTime: 0.3
