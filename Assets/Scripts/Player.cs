@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 sealed class Player : MonoBehaviour {
+    public static Player instance;
     Rigidbody2D rb;
     [SerializeField]
     CircleCollider2D upperCollider;
@@ -35,6 +36,10 @@ sealed class Player : MonoBehaviour {
     public float DefaultMaskPercentage { get; private set; } = 1f;
     public float RatMaskPercentage { get; private set; } = 0f;
     public float BunnyMaskPercentage { get; private set; } = 0f;
+
+    void Awake() {
+        instance = this;
+    }
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
@@ -184,6 +189,8 @@ sealed class Player : MonoBehaviour {
     }
 
     public void TakeDamage(int damage) {
+        animator.Flash();
+
         health -= damage;
         if (health <= 0) {
             Die();

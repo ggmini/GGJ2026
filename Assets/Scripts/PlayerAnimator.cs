@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Slothsoft.Aseprite;
@@ -124,5 +125,28 @@ sealed class PlayerAnimator : MonoBehaviour {
         }
 
         mask.transform.localPosition = position;
+    }
+
+    internal void Flash() {
+        if (flashRoutine is not null) {
+            StopCoroutine(flashRoutine);
+        }
+
+        flashRoutine = StartCoroutine(Flash_Co());
+    }
+
+    Coroutine flashRoutine;
+    [SerializeField]
+    float flashDuration = 1;
+    [SerializeField]
+    AnimationCurve flashAnimation = AnimationCurve.Linear(0, 1, 1, 0);
+
+    IEnumerator Flash_Co() {
+        for (float flashTimer = 0; flashTimer < flashDuration; flashTimer += Time.deltaTime) {
+            sprite.material.SetFloat("_FlashIntensity", flashAnimation.Evaluate(flashTimer));
+            yield return null;
+        }
+
+        flashRoutine = null;
     }
 }

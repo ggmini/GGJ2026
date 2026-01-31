@@ -10,12 +10,19 @@ sealed class PlayerDanger : MonoBehaviour {
     [SerializeField]
     TileBase normalTile;
 
+    [SerializeField]
+    bool isDangerous = false;
+
     void Start() {
         UpdateTiles();
     }
 
-    [SerializeField]
-    bool isDangerous = false;
+    void Update() {
+        if (Player.instance) {
+            //isDangerous = !isDangerous;
+            //UpdateTiles();
+        }
+    }
 
     void UpdateTiles() {
         var (source, target) = isDangerous ? (dangerTile, normalTile) : (normalTile, dangerTile);
