@@ -27,7 +27,7 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
             timeOnGround = 0f;
         }
 
-        if (timeOnGround > 0.5f) {
+        if (timeOnGround > 0.5f) 
             Jump();
 
     }
@@ -45,9 +45,7 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
             TurnAround();
             return true;
         } else if (hitLeft.collider != null)
-            return true;
-        }
-
+            return true;      
         return false;
     }
 
