@@ -4,14 +4,20 @@ using UnityEngine.InputSystem;
 
 sealed class PlayerController : MonoBehaviour {
 
-    public InputActionAsset actions;
+    [Header("Input Actions")]
     [SerializeField]
     InputActionReference moveAction;
-    InputAction jumpAction;
-    InputAction switchMaskAction;
-    InputAction maskAbilityAction;
-    InputAction crouchAction;
-    InputAction sprintAction;
+    [SerializeField]
+    InputActionReference jumpAction;
+    //[SerializeField]
+    //InputActionReference switchMaskAction;
+    //[SerializeField]
+    //InputActionReference maskAbilityAction;
+    [SerializeField]
+    InputActionReference crouchAction;
+    [SerializeField]
+    InputActionReference sprintAction;
+    [Space(10)]
 
     [SerializeField]
     LayerMask environmentLayer;
@@ -26,14 +32,6 @@ sealed class PlayerController : MonoBehaviour {
     [SerializeField]
     Player player;
 
-    void Awake() {
-        switchMaskAction = actions.FindActionMap("Player").FindAction("SwitchMask");
-        jumpAction = actions.FindActionMap("Player").FindAction("Jump");
-        maskAbilityAction = actions.FindActionMap("Player").FindAction("MaskAbility");
-        crouchAction = actions.FindActionMap("Player").FindAction("Crouch");
-        sprintAction = actions.FindActionMap("Player").FindAction("Sprint");
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void OnEnable() {
         currentMask = masks[0];
@@ -41,26 +39,26 @@ sealed class PlayerController : MonoBehaviour {
 
         moveAction.action.performed += Move;
         moveAction.action.canceled += Move;
-        jumpAction.performed += JumpActionPerformed;
-        jumpAction.canceled += JumpActionCancel;
-        switchMaskAction.performed += SwitchMask;
-        maskAbilityAction.performed += ActivateMaskAbility;
-        crouchAction.performed += CrouchAction;
-        crouchAction.canceled += CrouchAction;
-        sprintAction.performed += context => player.SetSprinting(true);
-        sprintAction.canceled += context => player.SetSprinting(false);
+        jumpAction.action.performed += JumpActionPerformed;
+        jumpAction.action.canceled += JumpActionCancel;
+        //switchMaskAction.action.performed += SwitchMask;
+        //maskAbilityAction.action.performed += ActivateMaskAbility;
+        crouchAction.action.performed += CrouchAction;
+        crouchAction.action.canceled += UncrouchAction;
+        sprintAction.action.performed += SprintAction;
+        sprintAction.action.canceled += StopSprintAction;
     }
     void OnDisable() {
         moveAction.action.performed -= Move;
         moveAction.action.canceled -= Move;
-        jumpAction.performed -= JumpActionPerformed;
-        jumpAction.canceled -= JumpActionCancel;
-        switchMaskAction.performed -= SwitchMask;
-        maskAbilityAction.performed -= ActivateMaskAbility;
-        crouchAction.performed -= CrouchAction;
-        crouchAction.canceled -= CrouchAction;
-        sprintAction.performed -= context => player.SetSprinting(true);
-        sprintAction.canceled -= context => player.SetSprinting(false);
+        jumpAction.action.performed -= JumpActionPerformed;
+        jumpAction.action.canceled -= JumpActionCancel;
+        //switchMaskAction.action.performed -= SwitchMask;
+        //maskAbilityAction.action.performed -= ActivateMaskAbility;
+        crouchAction.action.performed -= CrouchAction;
+        crouchAction.action.canceled -= UncrouchAction;
+        sprintAction.action.performed -= SprintAction;
+        sprintAction.action.canceled -= StopSprintAction;
     }
 
     void Move(InputAction.CallbackContext context) {
@@ -97,11 +95,21 @@ sealed class PlayerController : MonoBehaviour {
         }
     }
 
-    public void CrouchAction(InputAction.CallbackContext context) {
-        if (context.performed) {
-            player.Crouch();
-        } else if (context.canceled) {
-            player.Uncrouch();
-        }
+    void CrouchAction(InputAction.CallbackContext context) {
+        Debug.Log("Crouch");
+        player.Crouch();
+    }
+
+    void UncrouchAction(InputAction.CallbackContext context) {
+        player.Uncrouch();
+        Debug.Log("Uncrouch");
+    }
+
+    void SprintAction(InputAction.CallbackContext context) {
+        player.StartSprint();
+    }
+
+    void StopSprintAction(InputAction.CallbackContext context) {
+        player.StopSprint();
     }
 }

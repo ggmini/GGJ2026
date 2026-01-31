@@ -284,7 +284,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &721992995
 SpriteRenderer:
   serializedVersion: 2
@@ -701,7 +701,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -1055,10 +1055,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1462109751571867718, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1462109751571867718, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1462109751571867718, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e2721b4fcfd12954f867d502a2dbdb3b, type: 2}
     - target: {fileID: 5685959777751371235, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
       propertyPath: OM
       value: 
       objectReference: {fileID: 405575775}
+    - target: {fileID: 5896194734027682887, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6272508456814684472, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
       propertyPath: GM
       value: 
