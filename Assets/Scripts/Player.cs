@@ -4,6 +4,7 @@ using UnityEngine;
 sealed class Player : MonoBehaviour
 {
     Rigidbody2D rb;
+    [SerializeField]
     CircleCollider2D upperCollider;
     BoxCollider2D lowerCollider;
     [SerializeField]
@@ -42,11 +43,11 @@ sealed class Player : MonoBehaviour
     }
 
     public void CheckFloor() {
-        //TODO: Fix: Raycast is only in center, so might miss ground when on edges
+        //TODO: Adjust playerWidth based on player size
         RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
         RaycastHit2D hitRight = Physics2D.Raycast(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
-        Debug.DrawRay(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
-        Debug.DrawRay(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
+        //Debug.DrawRay(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
         if (hitLeft.collider != null || hitRight.collider != null) {
             airborne = false;
             canDoubleJump = true;
