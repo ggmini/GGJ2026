@@ -21,11 +21,13 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
     void FixedUpdate() {
         CheckInFront();
         bool grounded = isGrounded();
-        if (grounded)
+        if (grounded) {
             timeOnGround += Time.fixedDeltaTime;
-        else
+        } else {
             timeOnGround = 0f;
-        if (timeOnGround > 0.5f)
+        }
+
+        if (timeOnGround > 0.5f) {
             Jump();
 
     }
@@ -44,6 +46,8 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
             return true;
         } else if (hitLeft.collider != null)
             return true;
+        }
+
         return false;
     }
 
