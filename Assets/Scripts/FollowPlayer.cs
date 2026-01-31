@@ -2,13 +2,13 @@ using UnityEngine;
 
 sealed class FollowPlayer : MonoBehaviour {
     [SerializeField]
-    PlayerController player;
+    Player player;
 
     void FixedUpdate() {
         var oldPosition = transform.position;
         var newPosition = player.transform.position;
 
-        if (player.airborne && newPosition.y > oldPosition.y) {
+        if (player.Airborne && newPosition.y > oldPosition.y) {
             newPosition.y = oldPosition.y;
         }
 
