@@ -17,6 +17,7 @@ ScriptedImporter:
   importVariants:
     processors:
     - rid: 7196777105399742464
+    - rid: 7196777113545867264
   references:
     version: 2
     RefIds:
@@ -33,3 +34,7 @@ ScriptedImporter:
         warnForSuperfluousAnimations: 1
         importOverridePrefab: 0
         pixelsPerUnit: 16
+    - rid: 7196777113545867264
+      type: {class: AsepritePaletteProcessor, ns: Slothsoft.Aseprite.Editor, asm: Slothsoft.Aseprite.Editor}
+      data:
+        key: palette

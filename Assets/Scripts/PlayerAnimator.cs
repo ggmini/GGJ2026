@@ -1,3 +1,5 @@
+using Slothsoft.Aseprite;
+using Slothsoft.UnityExtensions;
 using UnityEngine;
 
 sealed class PlayerAnimator : MonoBehaviour {
@@ -79,5 +81,12 @@ sealed class PlayerAnimator : MonoBehaviour {
         mask.material.SetFloat("_Default", defaultVisibility);
         mask.material.SetFloat("_Mouse", mouseVisibility);
         mask.material.SetFloat("_Bunny", bunnyVisibility);
+    }
+
+    [SerializeField, Expandable]
+    ColorAsset eyeColor;
+
+    void LateUpdate() {
+
     }
 }
