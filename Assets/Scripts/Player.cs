@@ -23,6 +23,7 @@ sealed class Player : MonoBehaviour
     float maxJumpVelocity = 10f;
     float maxJumpTime = 0.75f;
     public float MaxJumpTime { get => maxJumpTime; }
+    float playerWidth = 0.5f;
 
     int health = 10;
     bool dead = false;
@@ -42,8 +43,11 @@ sealed class Player : MonoBehaviour
 
     public void CheckFloor() {
         //TODO: Fix: Raycast is only in center, so might miss ground when on edges
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, environmentLayer);
-        if (hit.collider != null) {
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
+        Debug.DrawRay(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
+        if (hitLeft.collider != null || hitRight.collider != null) {
             airborne = false;
             canDoubleJump = true;
         } else
