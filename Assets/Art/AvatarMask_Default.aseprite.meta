@@ -24,7 +24,7 @@ ScriptedImporter:
       type: {class: AsepriteAnimatorProcessor, ns: Slothsoft.Aseprite.Editor, asm: Slothsoft.Aseprite.Editor}
       data:
         key: animator
-        includeEmptyAnimations: 0
+        includeEmptyAnimations: 1
         importAsAnimator: 1
         importAsAnimatorOverride: 0
         referenceController: {instanceID: 0}
