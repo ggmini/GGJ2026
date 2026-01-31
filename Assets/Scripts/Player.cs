@@ -30,12 +30,9 @@ sealed class Player : MonoBehaviour {
     bool dead = false;
 
     [Header("Mask Percentages")]
-    [SerializeField]
-    float defaultMaskPercentage;
-    [SerializeField]
-    float ratMaskPercentage;
-    [SerializeField]
-    float bunnyMaskPercentage;
+    public float DefaultMaskPercentage { get; private set; } = 1f;
+    public float RatMaskPercentage { get; private set; } = 0f;
+    public float BunnyMaskPercentage { get; private set; } = 0f;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();

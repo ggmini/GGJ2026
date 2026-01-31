@@ -96,13 +96,11 @@ sealed class PlayerController : MonoBehaviour {
     }
 
     void CrouchAction(InputAction.CallbackContext context) {
-        Debug.Log("Crouch");
         player.Crouch();
     }
 
     void UncrouchAction(InputAction.CallbackContext context) {
         player.Uncrouch();
-        Debug.Log("Uncrouch");
     }
 
     void SprintAction(InputAction.CallbackContext context) {
