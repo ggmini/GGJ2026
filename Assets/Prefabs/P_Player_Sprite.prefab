@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7451933946978029631}
   - component: {fileID: 7002482392479620408}
   - component: {fileID: -5949235304601712865}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: P_Player_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,3 +128,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
   animator: {fileID: 7451933946978029631}
+  isUpright: 1

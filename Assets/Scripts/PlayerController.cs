@@ -9,7 +9,12 @@ public class PlayerController : MonoBehaviour {
     InputAction jumpAction;
     InputAction switchMaskAction;
     InputAction maskAbilityAction;
+    InputAction crouchAction;
     Rigidbody2D rb;
+    CircleCollider2D upperCollider;
+    BoxCollider2D lowerCollider;
+    [SerializeField]
+    PlayerAnimator animator;
 
     [SerializeField]
     LayerMask environmentLayer;
@@ -32,49 +37,61 @@ public class PlayerController : MonoBehaviour {
         switchMaskAction = actions.FindActionMap("Player").FindAction("SwitchMask");
         jumpAction = actions.FindActionMap("Player").FindAction("Jump");
         maskAbilityAction = actions.FindActionMap("Player").FindAction("MaskAbility");
+        crouchAction = actions.FindActionMap("Player").FindAction("Crouch");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        upperCollider = GetComponent<CircleCollider2D>();
+        lowerCollider = GetComponent<BoxCollider2D>();
         currentMask = masks[0];
         currentMaskIndex = 0;
 
         jumpAction.performed += Jump;
         switchMaskAction.performed += SwitchMask;
         maskAbilityAction.performed += ActivateMaskAbility;
+        crouchAction.performed += CrouchAction;
+        crouchAction.canceled += CrouchAction;
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-        float dir = moveAction.ReadValue<Vector2>().x;
-        Move(dir);
-
+        Move();
         CheckFloor();
     }
 
     void CheckFloor() {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.85f, environmentLayer);
-        Debug.DrawRay(transform.position, Vector2.down * 0.8f, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, environmentLayer);
         if (hit.collider != null) {
             airborne = false;
             canDoubleJump = true;
-        } else airborne = true;
+        } else
+            airborne = true;
     }
 
-    void Move(float dir) {
+    void Move() {
+        float dir = moveAction.ReadValue<Vector2>().x;
         rb.linearVelocity = new Vector2(dir * moveSpeed * Time.fixedDeltaTime, rb.linearVelocity.y);
+        if (dir != 0) {
+            int lookDir = dir > 0 ? 1 : -1;
+            transform.localScale = new Vector3(lookDir, 1, 1);
+        }
+        if (airborne)
+            animator.Jump();
+        else if (dir != 0)
+            animator.Run();            
+        else
+            animator.Idle();
     }
 
     void Jump(InputAction.CallbackContext context) {
         if (context.performed) {
             if (!airborne) {
-                rb.linearVelocityY = 0;
-                rb.AddForce(new Vector2(0, 15f), ForceMode2D.Impulse);
+                rb.linearVelocityY = 15f;
             }
             else if (canDoubleJump) {
-                rb.linearVelocityY = 0;
-                rb.AddForce(new Vector2(0, 15f), ForceMode2D.Impulse);
+                rb.linearVelocityY = 15f;
                 canDoubleJump = false;
             }
         }
@@ -96,5 +113,27 @@ public class PlayerController : MonoBehaviour {
     public void ActivateMaskAbility(InputAction.CallbackContext context) {
         if (context.performed) 
             currentMask.ActivateAbility();
+    }
+
+    public void CrouchAction(InputAction.CallbackContext context) {
+        if (context.performed)
+            Crouch();
+        else if (context.canceled)
+            Uncrouch();
+    }
+
+    void Crouch() {
+        upperCollider.enabled = false;
+        lowerCollider.size = new Vector2(1, 0.25f);
+        lowerCollider.offset = new Vector2(0, -0.375f);
+        // animator.Crouch();
+    }
+
+    void Uncrouch() {
+        //TODO: Check for ceiling before uncrouching
+        upperCollider.enabled = true;
+        lowerCollider.size = new Vector2(1, 0.5f);
+        lowerCollider.offset = new Vector2(0, -0.25f);
+        animator.Idle();
     }
 }
