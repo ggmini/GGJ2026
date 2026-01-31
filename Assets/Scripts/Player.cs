@@ -15,8 +15,7 @@ sealed class Player : MonoBehaviour {
     LayerMask environmentLayer;
     [SerializeField]
     float moveSpeed = 500f;
-    float sprintModifier = 1.5f;
-    bool isSprinting = false;
+    float sprintModifier = 1f;
 
     [field: SerializeField]
     public bool Airborne { get; private set; } = false;
@@ -29,9 +28,16 @@ sealed class Player : MonoBehaviour {
     int health = 10;
     bool dead = false;
 
+    [Header("Mask Percentages")]
+    [SerializeField]
+    float defaultMaskPercentage;
+    [SerializeField]
+    float ratMaskPercentage;
+    [SerializeField]
+    float bunnyMaskPercentage;
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
-        upperCollider = GetComponent<CircleCollider2D>();
         lowerCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -57,8 +63,8 @@ sealed class Player : MonoBehaviour {
         //TODO: Adjust playerWidth based on player size
         var hitLeft = Physics2D.Raycast(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
         var hitRight = Physics2D.Raycast(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down, 0.1f, environmentLayer);
-        //Debug.DrawRay(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
-        //Debug.DrawRay(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(-playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
+        Debug.DrawRay(transform.position + new Vector3(playerWidth, 0, 0), Vector2.down * 0.1f, Color.red);
         if (hitLeft.collider != null || hitRight.collider != null) {
             Airborne = false;
             CanDoubleJump = true;
@@ -78,11 +84,11 @@ sealed class Player : MonoBehaviour {
     Vector2 acceleration;
 
     public void Move(float xDir) {
-        moveIntention = xDir * (isSprinting ? moveSpeed * sprintModifier : moveSpeed);
+        moveIntention = xDir * moveSpeed;
     }
 
     void PerformMove() {
-        var targetVelocity = new Vector2(moveIntention * Time.fixedDeltaTime, rb.linearVelocity.y);
+        var targetVelocity = new Vector2(moveIntention * Time.fixedDeltaTime * sprintModifier, rb.linearVelocity.y);
         float smoothTime = (isJumping, Airborne) switch {
             (true, _) => jumpAccelerationTime,
             (_, true) => fallAccelerationTime,
@@ -116,10 +122,6 @@ sealed class Player : MonoBehaviour {
         }
     }
 
-    public void SetSprinting(bool sprinting) {
-        isSprinting = sprinting;
-    }
-
     public void Jump() {
         rb.linearVelocityY = maxJumpVelocity;
     }
@@ -127,7 +129,7 @@ sealed class Player : MonoBehaviour {
     public void Crouch() {
         upperCollider.enabled = false;
         lowerCollider.size = new Vector2(1, 0.25f);
-        lowerCollider.offset = new Vector2(0, -0.375f);
+        lowerCollider.offset = new Vector2(0, 0.125f);
         animator.isUpright = false;
     }
 
@@ -135,8 +137,8 @@ sealed class Player : MonoBehaviour {
         //TODO: Check for ceiling
         upperCollider.enabled = true;
         lowerCollider.size = new Vector2(1, 0.5f);
-        lowerCollider.offset = new Vector2(0, -0.25f);
-        animator.Idle();
+        lowerCollider.offset = new Vector2(0, 0.25f);
+        animator.isUpright = true;
     }
 
     public bool isJumping => rb.linearVelocity.y > 0;
@@ -158,6 +160,14 @@ sealed class Player : MonoBehaviour {
         }
 
         rb.linearVelocityY *= 0.25f;
+    }
+
+    public void StartSprint() {
+        sprintModifier = 1.5f;
+    }
+
+    public void StopSprint() {
+        sprintModifier = 1f;
     }
 
     public void TakeDamage(int damage) {
