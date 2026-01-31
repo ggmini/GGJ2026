@@ -133,7 +133,7 @@ MonoBehaviour:
   mask: {fileID: 3689761327598404570}
   isUpright: 1
   eyeColor: {fileID: -3462275732687056424, guid: 9a30e45c0ff72d44e808470b99d44e47, type: 3}
-  eyeOffset: {x: -0.46875, y: 0.03125}
+  eyeOffset: {x: -0.9375, y: 0.03125}
 --- !u!1 &8551670132707352539
 GameObject:
   m_ObjectHideFlags: 0

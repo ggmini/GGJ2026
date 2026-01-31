@@ -39,7 +39,7 @@ ScriptedImporter:
           ignoreEmptySprites: 0
           extrude: 0
           meshType: 0
-          generateFallbackPhysicsShape: 0
+          generateFallbackPhysicsShape: 1
           includeHiddenLayers: 0
           extractEmission: 1
           emissionLayerName: Emission

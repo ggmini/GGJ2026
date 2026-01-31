@@ -32,4 +32,4 @@ ScriptedImporter:
         warnForMissingAnimations: 1
         warnForSuperfluousAnimations: 1
         importOverridePrefab: 0
-        pixelsPerUnit: 16
+        pixelsPerUnit: 8

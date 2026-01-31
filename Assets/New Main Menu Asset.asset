@@ -12,8 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c303d70611ff4841999a2655f7e286b, type: 3}
   m_Name: New Main Menu Asset
   m_EditorClassIdentifier: Runtime::MainMenuAsset
-  gameScene:
-    Scene: {fileID: 102900000, guid: f9b9015a147464f4c8c391f2efe49ae8, type: 3}
-    SceneName: BaseScene
+  levels:
+  - Scene: {fileID: 102900000, guid: 657596f640c144440bb68a72bf82d788, type: 3}
+    SceneName: Level_1
+    sceneIndex: 1
+    sceneEnabled: 1
+  - Scene: {fileID: 102900000, guid: 657596f640c144440bb68a72bf82d788, type: 3}
+    SceneName: Level_1
+    sceneIndex: 1
+    sceneEnabled: 1
+  - Scene: {fileID: 102900000, guid: 657596f640c144440bb68a72bf82d788, type: 3}
+    SceneName: Level_1
     sceneIndex: 1
     sceneEnabled: 1
