@@ -26,7 +26,6 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
         } else {
             timeOnGround = 0f;
         }
-
         if (timeOnGround > 0.5f)
             Jump();
 
