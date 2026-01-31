@@ -149,12 +149,4 @@ sealed class PlayerAnimator : MonoBehaviour {
 
         flashRoutine = null;
     }
-
-    public void Flash() {
-        //TODO
-    }
-
-    public void FlashReset() {
-        //TODO
-    }
 }

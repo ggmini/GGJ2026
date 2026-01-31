@@ -37,14 +37,13 @@ sealed class Player : MonoBehaviour {
     public float DefaultMaskPercentage { get; private set; } = 1f;
     public float RatMaskPercentage { get; private set; } = 0f;
     public float BunnyMaskPercentage { get; private set; } = 0f;
-void Awake() {
+    void Awake() {
         instance = this;
     }
-public enum MaskType {
+    public enum MaskType {
         Default,
         Rat,
         Bunny
-    }
     }
     public MaskType activeMask { get; private set; } = MaskType.Default;
 
@@ -72,10 +71,11 @@ public enum MaskType {
         }
 
         //TODO: there must a better way of doing this
-        if (crouched && moveIntention != 0)
+        if (crouched && moveIntention != 0) {
             IncreaseRatMask();
-        else if (isJumping && moveIntention != 0)
+        } else if (isJumping && moveIntention != 0) {
             IncreaseBunnyMask();
+        }
     }
 
     public void CheckFloor() {
@@ -214,16 +214,9 @@ public enum MaskType {
         animator.Flash();
 
         health -= damage;
-        StartCoroutine(DamageFlash());
         if (health <= 0) {
             Die();
         }
-    }
-
-    IEnumerator DamageFlash() {
-        animator.Flash();
-        yield return new WaitForSeconds(0.2f);
-        animator.FlashReset();
     }
 
     void Die() {
@@ -238,8 +231,10 @@ public enum MaskType {
     }
 
     void IncreaseRatMask() {
-        if (RatMaskPercentage == 1f)
+        if (RatMaskPercentage == 1f) {
             return;
+        }
+
         RatMaskPercentage += maskIncreaseAmount;
         DefaultMaskPercentage -= maskIncreaseAmount / 2;
         BunnyMaskPercentage -= maskIncreaseAmount / 2;
@@ -251,13 +246,17 @@ public enum MaskType {
             DefaultMaskPercentage -= BunnyMaskPercentage;
             BunnyMaskPercentage = 0f;
         }
-        if (RatMaskPercentage == 1f)
+
+        if (RatMaskPercentage == 1f) {
             activeMask = MaskType.Rat;
+        }
     }
 
     void IncreaseBunnyMask() {
-        if (BunnyMaskPercentage == 1f)
+        if (BunnyMaskPercentage == 1f) {
             return;
+        }
+
         BunnyMaskPercentage += maskIncreaseAmount;
         DefaultMaskPercentage -= maskIncreaseAmount / 2;
         RatMaskPercentage -= maskIncreaseAmount / 2;
@@ -269,7 +268,9 @@ public enum MaskType {
             DefaultMaskPercentage -= RatMaskPercentage;
             RatMaskPercentage = 0f;
         }
-        if (BunnyMaskPercentage == 1f)
+
+        if (BunnyMaskPercentage == 1f) {
             activeMask = MaskType.Bunny;
+        }
     }
 }
