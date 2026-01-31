@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour {
+sealed class PlayerController : MonoBehaviour {
 
     public InputActionAsset actions;
     InputAction moveAction;
@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
     InputAction switchMaskAction;
     InputAction maskAbilityAction;
     InputAction crouchAction;
+    InputAction sprintAction;
 
     [SerializeField]
     LayerMask environmentLayer;
@@ -27,12 +28,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     Player player;
 
-    private void Awake() {
+    void Awake() {
         moveAction = actions.FindActionMap("Player").FindAction("Move");
         switchMaskAction = actions.FindActionMap("Player").FindAction("SwitchMask");
         jumpAction = actions.FindActionMap("Player").FindAction("Jump");
         maskAbilityAction = actions.FindActionMap("Player").FindAction("MaskAbility");
         crouchAction = actions.FindActionMap("Player").FindAction("Crouch");
+        sprintAction = actions.FindActionMap("Player").FindAction("Sprint");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -46,6 +48,8 @@ public class PlayerController : MonoBehaviour {
         maskAbilityAction.performed += ActivateMaskAbility;
         crouchAction.performed += CrouchAction;
         crouchAction.canceled += CrouchAction;
+        sprintAction.performed += context => player.SetSprinting(true);
+        sprintAction.canceled += context => player.SetSprinting(false);
     }
 
     // Update is called once per frame
