@@ -128,3 +128,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
   animator: {fileID: 7451933946978029631}
+  sprite: {fileID: 7002482392479620408}
+  isUpright: 1
