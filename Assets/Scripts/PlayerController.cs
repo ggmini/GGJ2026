@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour {
     Mask currentMask;
     int currentMaskIndex = 0;
 
+    float timeJumpPressed = 0f;
+    float maxJumpTime = 0.75f;
+    bool jumping = false;
+
     private void Awake() {
         moveAction = actions.FindActionMap("Player").FindAction("Move");
         switchMaskAction = actions.FindActionMap("Player").FindAction("SwitchMask");
@@ -48,7 +52,8 @@ public class PlayerController : MonoBehaviour {
         currentMask = masks[0];
         currentMaskIndex = 0;
 
-        jumpAction.performed += Jump;
+        jumpAction.performed += JumpAction;
+        jumpAction.canceled += JumpAction;
         switchMaskAction.performed += SwitchMask;
         maskAbilityAction.performed += ActivateMaskAbility;
         crouchAction.performed += CrouchAction;
@@ -58,10 +63,16 @@ public class PlayerController : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate() {
         Move();
+        if(jumping) {
+            if (timeJumpPressed < maxJumpTime)
+                Jump();
+            timeJumpPressed += Time.fixedDeltaTime;
+        }
         CheckFloor();
     }
 
     void CheckFloor() {
+        //TODO: Fix: Raycast is only in center, so might miss ground when on edges
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, environmentLayer);
         if (hit.collider != null) {
             airborne = false;
@@ -85,16 +96,24 @@ public class PlayerController : MonoBehaviour {
             animator.Idle();
     }
 
-    void Jump(InputAction.CallbackContext context) {
+    void JumpAction(InputAction.CallbackContext context) {
         if (context.performed) {
-            if (!airborne) {
-                rb.linearVelocityY = 15f;
-            }
+            if (!airborne)
+                jumping = true;
             else if (canDoubleJump) {
-                rb.linearVelocityY = 15f;
+                jumping = true;
                 canDoubleJump = false;
             }
+        } else if (context.canceled) {
+            timeJumpPressed = 0f;
+            jumping = false;
         }
+    }
+
+    void Jump() {
+        float jumpVelocity = 10f;
+        jumpVelocity *=  maxJumpTime - (timeJumpPressed / maxJumpTime);
+        rb.linearVelocityY = jumpVelocity;
     }
 
     public void SwitchMask(InputAction.CallbackContext context) {
