@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Slothsoft.Aseprite;
 using Slothsoft.UnityExtensions;
 using UnityEngine;
@@ -17,7 +19,10 @@ sealed class PlayerAnimator : MonoBehaviour {
 
     public bool isFacingLeft {
         get => sprite.flipX;
-        set => sprite.flipX = value;
+        set {
+            sprite.flipX = value;
+            mask.flipX = value;
+        }
     }
 
     [ContextMenu(nameof(TurnAround))]
@@ -85,8 +90,39 @@ sealed class PlayerAnimator : MonoBehaviour {
 
     [SerializeField, Expandable]
     ColorAsset eyeColor;
+    [SerializeField]
+    Vector2 eyeOffset;
+
+    readonly Dictionary<Sprite, Vector2> eyePositions = new();
 
     void LateUpdate() {
+        if (!eyePositions.TryGetValue(sprite.sprite, out var position)) {
+            position = Vector2.zero;
+            int count = 0;
+            var pixels = sprite
+                .sprite
+                .GetPixelsWithPosition()
+                .Where(pixel => pixel.color.IsEqualTo(eyeColor.color32));
+            foreach (var pixel in pixels) {
+                position += pixel.position;
+                count++;
+            }
 
+            if (count == 0) {
+                return;
+            }
+
+            position /= count;
+
+            eyePositions[sprite.sprite] = position;
+        }
+
+        position += eyeOffset;
+
+        if (isFacingLeft) {
+            position.x *= -1;
+        }
+
+        mask.transform.localPosition = position;
     }
 }
