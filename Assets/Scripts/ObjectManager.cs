@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ObjectManager : MonoBehaviour
+sealed class ObjectManager : MonoBehaviour
 {
     public GameObject[] layerCollections;
     int[] currentLayerIndex = { 0 };

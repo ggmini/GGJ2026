@@ -287,6 +287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 405575776}
   - component: {fileID: 405575775}
+  - component: {fileID: 405575777}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -324,6 +325,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &405575777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405575774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e777bda1d2ab844999aef1d266584a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Runtime::GameManager
 --- !u!1 &675028246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,7 +1507,7 @@ PrefabInstance:
     - target: {fileID: 1589407593524427053, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 8343390061020445899}
+      objectReference: {fileID: 8343390061020445900}
     - target: {fileID: 8481497462053255451, guid: 364b9f499ebafb949b3667e6e940b4d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1552,6 +1565,10 @@ PrefabInstance:
       propertyPath: OM
       value: 
       objectReference: {fileID: 405575775}
+    - target: {fileID: 6272508456814684472, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+      propertyPath: GM
+      value: 
+      objectReference: {fileID: 405575777}
     - target: {fileID: 6582628406689514917, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1601,17 +1618,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
---- !u!114 &8343390061020445899 stripped
+--- !u!114 &8343390061020445900 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5685959777751371235, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6272508456814684472, guid: 68bec512e3e5cf94980a0996700c43ad, type: 3}
   m_PrefabInstance: {fileID: 8343390061020445898}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d52b8e0c9a2747649a31c3fbb3e00191, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e95d968fb8faaf4e8dec8606ac7926e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::Player
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
