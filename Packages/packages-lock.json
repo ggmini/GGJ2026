@@ -9,6 +9,18 @@
       },
       "url": "https://package.openupm.com"
     },
+    "com.strayfarer.ui": {
+      "version": "2.0.0-pre.11",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "net.slothsoft.unity-extensions": "4.2.0",
+        "net.slothsoft.test-runner": "1.1.0",
+        "com.unity.ui": "1.0.0",
+        "com.unity.modules.uielements": "1.0.0"
+      },
+      "url": "https://packages.slothsoft.net"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.2",
       "depth": 0,
@@ -324,6 +336,12 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.unity.ui": {
+      "version": "2.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {}
+    },
     "com.unity.visualscripting": {
       "version": "1.9.9",
       "depth": 0,
@@ -346,6 +364,20 @@
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.nuget.newtonsoft-json": "3.2.2",
         "com.unity.test-framework": "1.6.0"
+      },
+      "url": "https://packages.slothsoft.net"
+    },
+    "net.slothsoft.test-runner": {
+      "version": "1.1.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "net.slothsoft.unity-extensions": "4.2.0",
+        "com.unity.test-framework": "1.5.1",
+        "net.tnrd.nsubstitute": "5.1.0",
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.test-framework.performance": "3.2.0",
+        "com.unity.modules.uielements": "1.0.0"
       },
       "url": "https://packages.slothsoft.net"
     },
