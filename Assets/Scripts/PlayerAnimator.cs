@@ -1,17 +1,65 @@
+using System.Collections.Generic;
+using System.Linq;
+using MyBox;
 using UnityEngine;
 
 sealed class PlayerAnimator : MonoBehaviour {
     [SerializeField]
     Animator animator;
+
+    IEnumerable<Animator> animators {
+        get {
+            yield return animator;
+
+            if (defaultMask) {
+                yield return defaultMask.animator;
+            }
+
+            if (mouseMask) {
+                yield return mouseMask.animator;
+            }
+
+            if (bunnyMask) {
+                yield return bunnyMask.animator;
+            }
+        }
+    }
+
     [SerializeField]
     SpriteRenderer sprite;
+
+    IEnumerable<SpriteRenderer> sprites {
+        get {
+            yield return sprite;
+
+            if (defaultMask) {
+                yield return defaultMask.sprite;
+            }
+
+            if (mouseMask) {
+                yield return mouseMask.sprite;
+            }
+
+            if (bunnyMask) {
+                yield return bunnyMask.sprite;
+            }
+        }
+    }
 
     [SerializeField]
     public bool isUpright = true;
 
+    [Space]
+    [SerializeField]
+    MaskAnimator defaultMask;
+    [SerializeField]
+    MaskAnimator mouseMask;
+    [SerializeField]
+    MaskAnimator bunnyMask;
+
     public bool isFacingLeft {
-        get => sprite.flipX;
-        set => sprite.flipX = value;
+        get => sprites.First().flipX;
+        set => sprites.ForEach(s => s.flipX = value);
     }
 
     [ContextMenu(nameof(TurnAround))]
@@ -20,7 +68,8 @@ sealed class PlayerAnimator : MonoBehaviour {
     }
 
     void Play(string animation) {
-        animator.Play(isUpright ? $"{STATE_UPRIGHT}_{animation}" : $"{STATE_DUCKED}_{animation}", 0);
+        string anim = isUpright ? $"{STATE_UPRIGHT}_{animation}" : $"{STATE_DUCKED}_{animation}";
+        animators.ForEach(a => a.Play(anim, 0));
     }
 
     const string STATE_UPRIGHT = "upright";
@@ -30,6 +79,10 @@ sealed class PlayerAnimator : MonoBehaviour {
     const string ANIM_JUMPING = "jumping";
     const string ANIM_RUNNING = "running";
     const string ANIM_FALLING = "falling";
+
+    void Start() {
+        ShowDefaultMask();
+    }
 
     [ContextMenu(nameof(Idle))]
     public void Idle() {
@@ -49,5 +102,34 @@ sealed class PlayerAnimator : MonoBehaviour {
     [ContextMenu(nameof(Fall))]
     public void Fall() {
         Play(ANIM_FALLING);
+    }
+
+    [ContextMenu(nameof(ShowDefaultMask))]
+    public void ShowDefaultMask() {
+        SetMaskRatios(1, 0, 0);
+    }
+
+    [ContextMenu(nameof(ShowMouseMask))]
+    public void ShowMouseMask() {
+        SetMaskRatios(0, 1, 0);
+    }
+
+    [ContextMenu(nameof(ShowBunnyMask))]
+    public void ShowBunnyMask() {
+        SetMaskRatios(0, 0, 1);
+    }
+
+    public void SetMaskRatios(float defaultVisibility, float mouseVisibility, float bunnyVisibility) {
+        if (defaultMask) {
+            defaultMask.visibility = defaultVisibility;
+        }
+
+        if (mouseMask) {
+            mouseMask.visibility = mouseVisibility;
+        }
+
+        if (bunnyMask) {
+            bunnyMask.visibility = bunnyVisibility;
+        }
     }
 }
