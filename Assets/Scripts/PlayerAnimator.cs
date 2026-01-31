@@ -125,4 +125,12 @@ sealed class PlayerAnimator : MonoBehaviour {
 
         mask.transform.localPosition = position;
     }
+
+    public void Flash() {
+        //TODO
+    }
+
+    public void FlashReset() {
+        //TODO
+    }
 }
