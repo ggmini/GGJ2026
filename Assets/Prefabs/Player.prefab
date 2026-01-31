@@ -429,13 +429,11 @@ MonoBehaviour:
   environmentLayer:
     serializedVersion: 2
     m_Bits: 128
-  moveSpeed: 10
-  sprintModifier: 1.5
+  moveSpeed: 6
+  crouchModifier: 0.75
+  sprintModifier: 1.75
   isSprinting: 0
   <Airborne>k__BackingField: 0
-  defaultMaskPercentage: 0
-  ratMaskPercentage: 0
-  bunnyMaskPercentage: 0
   runAccelerationTime: 0.1
   jumpAccelerationTime: 0.2
   fallAccelerationTime: 0.3

@@ -14,6 +14,8 @@ sealed class Player : MonoBehaviour {
     [SerializeField]
     float moveSpeed = 500f;
     [SerializeField]
+    float crouchModifier = 0.5f;
+    [SerializeField]
     float sprintModifier = 1.5f;
     [SerializeField]
     bool isSprinting = false;
@@ -85,6 +87,10 @@ sealed class Player : MonoBehaviour {
             targetVelocity *= sprintModifier;
         }
 
+        if (isCrouching) {
+            targetVelocity *= crouchModifier;
+        }
+
         float smoothTime = (isJumping, Airborne) switch {
             (true, _) => jumpAccelerationTime,
             (_, true) => fallAccelerationTime,
@@ -129,7 +135,10 @@ sealed class Player : MonoBehaviour {
         rb.linearVelocityY = maxJumpVelocity;
     }
 
+    bool isCrouching = false;
+
     public void Crouch() {
+        isCrouching = true;
         upperCollider.enabled = false;
         lowerCollider.size = new Vector2(1, 0.25f);
         lowerCollider.offset = new Vector2(0, 0.125f);
@@ -137,6 +146,7 @@ sealed class Player : MonoBehaviour {
     }
 
     public void Uncrouch() {
+        isCrouching = false;
         //TODO: Check for ceiling
         upperCollider.enabled = true;
         lowerCollider.size = new Vector2(1, 0.5f);
