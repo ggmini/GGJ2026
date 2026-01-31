@@ -10,8 +10,6 @@ sealed class Player : MonoBehaviour {
     [SerializeField]
     PlayerAnimator animator;
     [SerializeField]
-    GameManager GM;
-    [SerializeField]
     LayerMask environmentLayer;
     [SerializeField]
     float moveSpeed = 500f;
@@ -185,6 +183,6 @@ sealed class Player : MonoBehaviour {
 
     IEnumerator ReloadScene() {
         yield return new WaitForSeconds(1.6f);
-        GM.ReloadScene();
+        GameManager.ReloadScene();
     }
 }
