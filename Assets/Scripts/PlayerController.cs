@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     float moveSpeed = 500f;
 
-    bool airborne = false;
+    public bool airborne = false;
     bool canDoubleJump = false;
     
     [SerializeField]
