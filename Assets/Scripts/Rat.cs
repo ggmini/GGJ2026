@@ -14,12 +14,13 @@ sealed class Rat : MonoBehaviour
     }
 
     void CheckInFront() {
+        //TODO: Adjust raycast positions based on rat size
         var origin = transform.position + new Vector3(dir * 0.75f, 0, 0);
         var hitFront = Physics2D.Raycast(origin, Vector2.right * dir, 0.1f, LayerMask.GetMask("Environment"));
-        Debug.DrawRay(origin, Vector2.right * dir * 0.1f, Color.red);
+        //Debug.DrawRay(origin, Vector2.right * dir * 0.1f, Color.red);
         origin.y -= 0.5f;
         var hitDown = Physics2D.Raycast(origin, Vector2.down, 0.1f, LayerMask.GetMask("Environment"));
-        Debug.DrawRay(origin, Vector2.down * 0.1f, Color.red);
+        //Debug.DrawRay(origin, Vector2.down * 0.1f, Color.red);
         if (hitFront.collider != null || hitDown.collider == null) {
             dir *= -1f;
             var scale = transform.localScale;
@@ -30,9 +31,9 @@ sealed class Rat : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
-            Debug.Log("Rat collided with Player");
             var player = other.gameObject.GetComponent<Player>();
-            player.TakeDamage(5);
+            //TODO: Check if player is wearing rat mask
+            player.TakeDamage(1);
         }
     }
 
