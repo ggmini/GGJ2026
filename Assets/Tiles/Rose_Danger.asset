@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: Rose_Danger
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.RuleTile
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 0}
+  m_DefaultGameObject: {fileID: 2000582584711332835, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
     - {fileID: -4864488839028204758, guid: 667caa45732c6e24a999ba3270ab4308, type: 3}
     - {fileID: -6926348556985747078, guid: 667caa45732c6e24a999ba3270ab4308, type: 3}
-    m_GameObject: {fileID: 0}
+    m_GameObject: {fileID: 2000582584711332835, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
