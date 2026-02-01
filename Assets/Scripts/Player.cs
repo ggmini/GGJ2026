@@ -116,7 +116,7 @@ sealed class Player : MonoBehaviour {
             case (_, _, true, _, _):
                 break;
             default:
-                IncreaseDefaultMask(0.5f);
+                IncreaseDefaultMask(0.75f);
                 break;
         }
     }
@@ -218,8 +218,6 @@ sealed class Player : MonoBehaviour {
     public void Crouch() {
         isCrouching = true;
         upperCollider.enabled = false;
-        lowerCollider.size = new Vector2(1, 0.25f);
-        lowerCollider.offset = new Vector2(0, 0.125f);
         animator.isUpright = false;
     }
 
@@ -240,8 +238,6 @@ sealed class Player : MonoBehaviour {
             if (hit.collider == null) {
                 isCrouching = false;
                 upperCollider.enabled = true;
-                lowerCollider.size = new Vector2(1, 1);
-                lowerCollider.offset = new Vector2(0, 0.5f);
                 animator.isUpright = true;
                 yield break;
             }
