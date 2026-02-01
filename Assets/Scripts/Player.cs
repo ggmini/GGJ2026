@@ -271,8 +271,9 @@ sealed class Player : MonoBehaviour {
 
     Coroutine RecoverRoutine;
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(int damage, float sourceXPos) {
         animator.Flash();
+        Knockback(sourceXPos);
         if (RecoverRoutine != null)
             StopCoroutine(RecoverRoutine);
         RecoverRoutine = StartCoroutine(RecoverHealth());
@@ -287,6 +288,14 @@ sealed class Player : MonoBehaviour {
         while (health < maxHealth) {
             yield return new WaitForSeconds(2f);
             health++;
+        }
+    }
+    
+    void Knockback(float sourcePos) {
+        if (transform.position.x < sourcePos) {
+            rb.linearVelocity = new Vector2(-5f, 5f);
+        } else {
+            rb.linearVelocity = new Vector2(5f, 5f);
         }
     }
 

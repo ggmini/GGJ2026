@@ -16,15 +16,15 @@ sealed class DamagePlayerEffect : IEffect {
     }
     public void Invoke(GameObject context) {
         if (context.TryGetComponent<Player>(out var player)) {
-            if (player.activeMask != immuneMask) {
-                player.TakeDamage(amount);
+        if (player.activeMask != immuneMask) {
+                player.TakeDamage(amount, 1);
             }
         }
     }
     public void Invoke(CollisionInfo collision) {
         if (collision.gameObject.TryGetComponent<Player>(out var player)) {
-            if (player.activeMask != immuneMask) {
-                player.TakeDamage(amount);
+        if (player.activeMask != immuneMask) {
+                player.TakeDamage(amount, 1);
             }
         }
     }
