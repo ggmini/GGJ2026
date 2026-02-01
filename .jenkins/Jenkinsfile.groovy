@@ -40,7 +40,7 @@ pipeline {
 
 							// which platforms to deploy to
 							DEPLOY_TO_STEAM : '0',
-							DEPLOY_TO_ITCH : '0',
+							DEPLOY_TO_ITCH : '1',
 							DEPLOY_ON_FAILURE : '1',
 
 							// configration for deploying to steam
@@ -51,7 +51,7 @@ pipeline {
 							STEAM_CREDENTIALS : '',
 
 							// configuration for deploying to itch
-							ITCH_ID : 'faulo/ggj-2026',
+							ITCH_ID : 'faulo/fitting-in',
 							ITCH_CREDENTIALS : 'Faulo-itch.io',
 
 							// configuration for deploying to Discord

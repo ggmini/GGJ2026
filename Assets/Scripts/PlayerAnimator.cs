@@ -45,6 +45,7 @@ sealed class PlayerAnimator : MonoBehaviour {
     const string ANIM_FALLING = "falling";
 
     void Start() {
+        Idle();
         ShowDefaultMask();
     }
 
