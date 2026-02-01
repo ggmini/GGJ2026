@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1260929031
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
@@ -183,7 +183,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1260929031
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3625043607559282579, guid: 19fb86013d8c24d6cb8410c0aadf30fa, type: 3}
@@ -471,9 +471,11 @@ MonoBehaviour:
   health: 10
   <activeMask>k__BackingField: 0
   maskIncreaseAmount: 0.7
+  maskNeededToSwitchAmount: 0.7
   runAccelerationTime: 0.1
   jumpAccelerationTime: 0.2
   fallAccelerationTime: 0.3
+  knockbackVelocity: 10
 --- !u!58 &6986096632558889209
 CircleCollider2D:
   m_ObjectHideFlags: 0

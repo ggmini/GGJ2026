@@ -152,13 +152,14 @@ sealed class Player : MonoBehaviour {
     void PerformMove() {
         float targetVelocity = moveIntention;
 
-        if (isCrouching && isSprinting && activeMask == MaskType.Mouse)
+        if (isCrouching && isSprinting && activeMask == MaskType.Mouse) {
             targetVelocity *= sprintModifier;
-        else if (isCrouching && isSprinting) { }
-        else if (isCrouching)
+        } else if (isCrouching && isSprinting) {
+        } else if (isCrouching) {
             targetVelocity *= crouchModifier;
-        else if (isSprinting)
+        } else if (isSprinting) {
             targetVelocity *= sprintModifier;
+        }
 
         float smoothTime = (isJumping, Airborne) switch {
             (true, _) => jumpAccelerationTime,
@@ -216,8 +217,10 @@ sealed class Player : MonoBehaviour {
     }
 
     public void Uncrouch() {
-        if (uncrouchCoroutine != null)
+        if (uncrouchCoroutine != null) {
             StopCoroutine(uncrouchCoroutine);
+        }
+
         uncrouchCoroutine = StartCoroutine(uncrouchRoutine());
 
     }
@@ -235,9 +238,9 @@ sealed class Player : MonoBehaviour {
                 animator.isUpright = true;
                 yield break;
             }
+
             yield return new WaitForFixedUpdate();
         }
-
     }
 
     public bool isJumping => rb.linearVelocityY > 0;
@@ -274,8 +277,10 @@ sealed class Player : MonoBehaviour {
     public void TakeDamage(int damage, float sourceXPos) {
         animator.Flash();
         Knockback(sourceXPos);
-        if (RecoverRoutine != null)
+        if (RecoverRoutine != null) {
             StopCoroutine(RecoverRoutine);
+        }
+
         RecoverRoutine = StartCoroutine(RecoverHealth());
         health -= damage;
         if (health <= 0) {
@@ -284,19 +289,24 @@ sealed class Player : MonoBehaviour {
     }
 
     IEnumerator RecoverHealth() {
-        yield return new WaitForSeconds(5f);  
+        yield return new WaitForSeconds(5f);
         while (health < maxHealth) {
             yield return new WaitForSeconds(2f);
             health++;
         }
     }
-    
+
+    [SerializeField]
+    float knockbackVelocity = 5;
+
     void Knockback(float sourcePos) {
+        float horizontal = UnityEngine.Random.Range(knockbackVelocity * 0.25f, knockbackVelocity * 0.75f);
+        float vertical = knockbackVelocity - horizontal;
         if (transform.position.x < sourcePos) {
-            rb.linearVelocity = new Vector2(-5f, 5f);
-        } else {
-            rb.linearVelocity = new Vector2(5f, 5f);
+            horizontal *= -1;
         }
+
+        rb.linearVelocity = new Vector2(horizontal, vertical);
     }
 
     void Die() {
