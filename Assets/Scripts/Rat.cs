@@ -64,9 +64,10 @@ sealed class Rat : MonoBehaviour
 
     bool checkJumpUp() {
         var origin = transform.position + new Vector3(0, 1f, 0);
-        var hit = Physics2D.Raycast(origin, Vector2.right * dir, 3.1f, LayerMask.GetMask("Environment"));
+        var lowHit = Physics2D.Raycast(origin, Vector2.right * dir, 3.1f, LayerMask.GetMask("Environment"));
+        var highHit = Physics2D.Raycast(origin + Vector3.up, Vector2.right * dir, 3.1f, LayerMask.GetMask("Environment"));
         //Debug.DrawRay(origin, Vector2.right * dir * 1.1f, Color.green);
-        if (hit.collider != null)
+        if (!lowHit.collider && !highHit.collider)
             return true;
         return false;
     }
