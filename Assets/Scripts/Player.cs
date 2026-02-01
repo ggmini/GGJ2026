@@ -40,10 +40,8 @@ sealed class Player : MonoBehaviour {
         set {
             _defaultMask = Mathf.Clamp01(value);
 
-            if (Mathf.Approximately(_defaultMask, 1)) {
+            if (_defaultMask >= maskNeededToSwitchAmount) {
                 activeMask = MaskType.Default;
-                _mouseMask = 0;
-                _bunnyMask = 0;
             }
 
             animator.SetMaskRatios(DefaultMaskPercentage, MouseMaskPercentage, BunnyMaskPercentage);
@@ -56,10 +54,8 @@ sealed class Player : MonoBehaviour {
         set {
             _mouseMask = Mathf.Clamp01(value);
 
-            if (Mathf.Approximately(_mouseMask, 1)) {
+            if (_mouseMask >= maskNeededToSwitchAmount) {
                 activeMask = MaskType.Mouse;
-                _defaultMask = 0;
-                _bunnyMask = 0;
             }
 
             animator.SetMaskRatios(DefaultMaskPercentage, MouseMaskPercentage, BunnyMaskPercentage);
@@ -72,10 +68,8 @@ sealed class Player : MonoBehaviour {
         set {
             _bunnyMask = Mathf.Clamp01(value);
 
-            if (Mathf.Approximately(_bunnyMask, 1)) {
+            if (_bunnyMask >= maskNeededToSwitchAmount) {
                 activeMask = MaskType.Bunny;
-                _defaultMask = 0;
-                _mouseMask = 0;
             }
 
             animator.SetMaskRatios(DefaultMaskPercentage, MouseMaskPercentage, BunnyMaskPercentage);
@@ -87,6 +81,8 @@ sealed class Player : MonoBehaviour {
 
     [SerializeField]
     float maskIncreaseAmount = 0.2f;
+    [SerializeField]
+    float maskNeededToSwitchAmount = 0.7f;
 
     void Awake() {
         instance = this;

@@ -8,16 +8,22 @@ using UnityEngine;
 sealed class DamagePlayerEffect : IEffect {
     [SerializeField]
     int amount = 1;
+    [SerializeField]
+    MaskType immuneMask = MaskType.Unknown;
 
     public void Invoke() { }
     public void Invoke(GameObject context) {
         if (context.TryGetComponent<Player>(out var player)) {
-            player.TakeDamage(amount);
+            if (player.activeMask != immuneMask) {
+                player.TakeDamage(amount);
+            }
         }
     }
     public void Invoke(CollisionInfo collision) {
         if (collision.gameObject.TryGetComponent<Player>(out var player)) {
-            player.TakeDamage(amount);
+            if (player.activeMask != immuneMask) {
+                player.TakeDamage(amount);
+            }
         }
     }
 }

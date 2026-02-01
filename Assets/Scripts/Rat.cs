@@ -89,6 +89,11 @@ sealed class Rat : MonoBehaviour
 
     void Move() {
         rb.linearVelocityX = moveSpeed * dir;
+        if (Mathf.Approximately(rb.linearVelocityX, 0)) {
+            animator.Idle();
+        } else {
+            animator.Run();
+        }
     }
 
 }

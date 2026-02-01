@@ -1,5 +1,6 @@
 public enum MaskType {
     Default,
     Mouse,
-    Bunny
+    Bunny,
+    Unknown = -1,
 }

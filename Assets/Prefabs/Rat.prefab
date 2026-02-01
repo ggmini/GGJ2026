@@ -132,6 +132,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7841978383844678479}
     m_Modifications:
+    - target: {fileID: 1239886198649947543, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
+      propertyPath: managedReferences[7196777115422032139].immuneMask
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2000582584711332835, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
       propertyPath: m_Name
       value: P_Danger
