@@ -205,7 +205,8 @@ sealed class Player : MonoBehaviour {
     }
 
     public void Jump() {
-        rb.linearVelocityY = maxJumpVelocity;
+        float modifier = activeMask == MaskType.Bunny ? 2f : 1f;
+        rb.linearVelocityY = maxJumpVelocity * modifier;
     }
 
     bool isCrouching = false;
