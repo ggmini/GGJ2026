@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4499356347871184743}
   - component: {fileID: 7225107148770186742}
-  - component: {fileID: 6033383803040693877}
   - component: {fileID: 2533007073064450536}
+  - component: {fileID: 3840030983287269746}
   m_Layer: 0
   m_Name: LevelExit
   m_TagString: Untagged
@@ -80,18 +80,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &6033383803040693877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 246820423102005807}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f6f52b5b028bb84e99a748676ae6b34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Runtime::LevelExit
 --- !u!212 &2533007073064450536
 SpriteRenderer:
   serializedVersion: 2
@@ -151,3 +139,41 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &3840030983287269746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246820423102005807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24da7c7fbb853cc43a1dfef6e9918de3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Runtime::CollisionTrigger2D
+  onTriggerEnter:
+    effects:
+    - rid: 4839056263145062483
+    - rid: 4839056263145062484
+  onlyCollideWithPlayer: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 4839056263145062483
+      type: {class: WaitThenDoEffect, ns: , asm: Runtime}
+      data:
+        effect:
+          effects:
+          - rid: 4839056263145062485
+        waitDuration: 1
+    - rid: 4839056263145062484
+      type: {class: DestroyGameObjectEffect, ns: , asm: Runtime}
+      data: 
+    - rid: 4839056263145062485
+      type: {class: LoadSceneEffect, ns: , asm: Runtime}
+      data:
+        sceneToLoad:
+          Scene: {fileID: 102900000, guid: c6233b01f2162bf4ea10ac3043f13452, type: 3}
+          SceneName: MainMenu
+          sceneIndex: 0
+          sceneEnabled: 1
