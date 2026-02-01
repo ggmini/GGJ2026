@@ -454,6 +454,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3e92988d-ffd4-4234-ac3d-cffdb48b83fd",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "42770fe9-daba-4e34-a2f8-5b5b1e995d8b",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
