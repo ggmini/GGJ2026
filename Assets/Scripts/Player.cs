@@ -316,9 +316,11 @@ sealed class Player : MonoBehaviour {
     }
 
     void Die() {
-        dead = true;
-        //animator.Die();
-        StartCoroutine(ReloadScene());
+        if (!dead) {
+            dead = true;
+            animator.Die();
+            StartCoroutine(ReloadScene());
+        }
     }
 
     IEnumerator ReloadScene() {

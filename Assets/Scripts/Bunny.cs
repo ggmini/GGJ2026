@@ -25,7 +25,7 @@ sealed class Bunny : MonoBehaviour {
         CheckInFront();
         bool grounded = isGrounded();
         if (grounded) {
-            timeOnGround += Time.deltaTime;
+            timeOnGround += Time.deltaTime * Random.value * 2;
             if (timeOnGround > 0.5f) {
                 Jump();
             } else {

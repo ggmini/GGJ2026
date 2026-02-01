@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Slothsoft.Effects;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,8 @@ sealed class PlayerController : MonoBehaviour {
     InputActionReference crouchAction;
     [SerializeField]
     InputActionReference sprintAction;
+    [SerializeField]
+    InputActionReference escapeAction;
     [Space(10)]
 
     [SerializeField]
@@ -51,6 +54,7 @@ sealed class PlayerController : MonoBehaviour {
         crouchAction.action.canceled += UncrouchAction;
         sprintAction.action.performed += SprintAction;
         sprintAction.action.canceled += StopSprintAction;
+        escapeAction.action.performed += OnEscape;
     }
 
     void OnDisable() {
@@ -64,8 +68,16 @@ sealed class PlayerController : MonoBehaviour {
         crouchAction.action.canceled -= UncrouchAction;
         sprintAction.action.performed -= SprintAction;
         sprintAction.action.canceled -= StopSprintAction;
+        escapeAction.action.performed -= OnEscape;
 
         inputs.Disable();
+    }
+
+    [SerializeField]
+    EffectEvent onEscape = new();
+
+    void OnEscape(InputAction.CallbackContext context) {
+        onEscape.Invoke(gameObject);
     }
 
     void Move(InputAction.CallbackContext context) {

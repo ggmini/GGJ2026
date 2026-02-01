@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Slothsoft.Aseprite;
+using Slothsoft.Effects;
 using Slothsoft.UnityExtensions;
 using UnityEngine;
 
@@ -149,5 +150,14 @@ sealed class PlayerAnimator : MonoBehaviour {
         }
 
         flashRoutine = null;
+    }
+
+    [SerializeField]
+    EffectEvent onDeath = new();
+
+    internal void Die() {
+        sprite.enabled = false;
+        mask.enabled = false;
+        onDeath.Invoke(gameObject);
     }
 }

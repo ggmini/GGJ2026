@@ -392,6 +392,7 @@ MonoBehaviour:
   jumpAction: {fileID: -2099379676528639254, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
   crouchAction: {fileID: 7040659881675835329, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
   sprintAction: {fileID: -7471211009204490832, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
+  escapeAction: {fileID: 1781555164194001046, guid: 60d8add94ae5ae249a34d6ef5af93f89, type: 3}
   environmentLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -400,6 +401,22 @@ MonoBehaviour:
   - {fileID: 2310024587777666447}
   - {fileID: 3644349249771218344}
   player: {fileID: 6272508456814684472}
+  onEscape:
+    effects:
+    - rid: 4839056264646623315
+  references:
+    version: 2
+    RefIds:
+    - rid: 4839056264646623315
+      type: {class: LoadScene, ns: Slothsoft.Effects.Effects, asm: Slothsoft.Effects}
+      data:
+        scene:
+          Scene: {fileID: 102900000, guid: c6233b01f2162bf4ea10ac3043f13452, type: 3}
+          SceneName: MainMenu
+          sceneIndex: 0
+          sceneEnabled: 1
+        mode: 0
+        loadAsync: 1
 --- !u!61 &2989942167986851126
 BoxCollider2D:
   m_ObjectHideFlags: 0

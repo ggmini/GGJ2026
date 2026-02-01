@@ -159,6 +159,26 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  onDeath:
+    effects:
+    - rid: 4839056264646623313
+  references:
+    version: 2
+    RefIds:
+    - rid: 4839056264646623313
+      type: {class: InstantiatePrefab, ns: Slothsoft.Effects.Effects, asm: Slothsoft.Effects}
+      data:
+        prefab: {fileID: 5842888163935823688, guid: e09d4fcba80c3bd4db1366d2ea6c47ba, type: 3}
+        parentToContext: 0
+        useCollisionPositionIfAvailable: 0
+        instantiateAt:
+          locator:
+            rid: 4839056264646623314
+        useDestructionDelay: 0
+        destructionDelay: 0
+    - rid: 4839056264646623314
+      type: {class: LocateFromContext, ns: Slothsoft.Effects.ObjectLocators, asm: Slothsoft.Effects}
+      data: 
 --- !u!1 &8551670132707352539
 GameObject:
   m_ObjectHideFlags: 0
