@@ -127,6 +127,7 @@ MonoBehaviour:
   jumpForce: {x: 200, y: 300}
   dir: 1
   modelWidth: 0.5
+  animator: {fileID: 3797197565726477099}
 --- !u!1 &9171568348508416685
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +271,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32efac7636245a843aff53d2d9ad3631, type: 3}
+--- !u!114 &3797197565726477099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5340214420553160127, guid: 32efac7636245a843aff53d2d9ad3631, type: 3}
+  m_PrefabInstance: {fileID: 95108127209841002}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e89f89857510cb4fa2e98b7b226f7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Runtime::EnemyAnimator
 --- !u!4 &5165612826970228137 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5115549493237605571, guid: 32efac7636245a843aff53d2d9ad3631, type: 3}

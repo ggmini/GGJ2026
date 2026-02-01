@@ -13,6 +13,7 @@ sealed class Rat : MonoBehaviour
     bool isJumping = false;
 
     void Start() {
+        animator.Idle();
         rb = GetComponent<Rigidbody2D>();
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-sealed class NewMonoBehaviourScript : MonoBehaviour {
+sealed class Bunny : MonoBehaviour {
 
     Rigidbody2D rb;
     [SerializeField]
@@ -13,8 +13,11 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
     [SerializeField]
     float modelWidth = 0.5f;
     bool justTurned;
+    [SerializeField]
+    EnemyAnimator animator;
 
     void Start() {
+        animator.Idle();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -22,13 +25,19 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
         CheckInFront();
         bool grounded = isGrounded();
         if (grounded) {
-            timeOnGround += Time.fixedDeltaTime;
+            timeOnGround += Time.deltaTime;
+            if (timeOnGround > 0.5f) {
+                Jump();
+            } else {
+                animator.Idle();
+            }
         } else {
+            if (rb.linearVelocityY < 0) {
+                animator.Fall();
+            }
+
             timeOnGround = 0f;
         }
-        if (timeOnGround > 0.5f)
-            Jump();
-
     }
 
     bool isGrounded() {
@@ -43,8 +52,10 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
         if (hitLeft.collider != hitRight.collider) {
             TurnAround();
             return true;
-        } else if (hitLeft.collider != null)
+        } else if (hitLeft.collider != null) {
             return true;
+        }
+
         return false;
     }
 
@@ -52,6 +63,7 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
         rb.AddForce(new Vector2(jumpForce.x * dir, jumpForce.y));
         timeOnGround = 0f;
         justTurned = false;
+        animator.Jump();
     }
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -73,8 +85,10 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
     }
 
     void TurnAround() {
-        if (justTurned)
+        if (justTurned) {
             return;
+        }
+
         dir *= -1;
         rb.linearVelocityX *= -1f;
         justTurned = true;
