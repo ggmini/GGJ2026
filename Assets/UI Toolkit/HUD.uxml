@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Default.uss?fileID=7433441132597879392&amp;guid=bea0e48f8b11b6c48ad82483f0649be1&amp;type=3#Default"/>
+    <ui:VisualElement class="hud" style="flex-grow: 1;">
+        <ui:VisualElement style="align-items: flex-end; flex-grow: 1;">
+            <ui:Label text="Fitting In &lt;color=#c8bfbf&gt;by Daniel Schulz and Gregory Munro"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="justify-content: flex-end;">
+            <ui:Label text="Move: &lt;color=#c8bfbf&gt;A/D, Stick&lt;/color&gt;"/>
+            <ui:Label text="Crouch: &lt;color=#c8bfbf&gt;S, LT"/>
+            <ui:Label text="Jump: &lt;color=#c8bfbf&gt;Space, A"/>
+            <ui:Label text="Sprint: &lt;color=#c8bfbf&gt;Shift, X"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
