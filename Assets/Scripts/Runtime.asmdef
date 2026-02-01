@@ -2,11 +2,13 @@
     "name": "Runtime",
     "rootNamespace": "",
     "references": [
-        "GUID:507d80cf36f8258488bde8c39deefd3a",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:48c9f6afdac61634db0e0f241c7d4d51",
-        "GUID:85f6a74d060cad547ab6eb0853804697",
-        "GUID:827f624055e464243ba23c90b06c81fa"
+        "Slothsoft.UnityExtensions",
+        "Unity.InputSystem",
+        "MyBox",
+        "Slothsoft.Aseprite",
+        "Slothsoft.Effects",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

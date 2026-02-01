@@ -30,7 +30,8 @@ sealed class Player : MonoBehaviour {
     public float MaxJumpTime { get; } = 0.75f;
     float playerWidth = 0.5f;
 
-    int health = 10;
+    public int maxHealth = 10;
+    public int health = 10;
     bool dead = false;
 
     float _defaultMask = 1;
@@ -274,18 +275,10 @@ sealed class Player : MonoBehaviour {
 
     IEnumerator RecoverHealth() {
         yield return new WaitForSeconds(5f);  
-        while (health < 10) {
+        while (health < maxHealth) {
             yield return new WaitForSeconds(2f);
             health++;
-            healthToVignette();
         }
-    }
-
-    void healthToVignette() {
-        float healthPercentage = health / 10f;
-        float vignetteIntensity = 0.3f + (0.2f * (1f - healthPercentage));
-
-
     }
 
     void Die() {
