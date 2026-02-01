@@ -1,3 +1,4 @@
+using MyBox;
 using UnityEngine;
 
 sealed class Rat : MonoBehaviour
@@ -47,7 +48,6 @@ sealed class Rat : MonoBehaviour
             }
         }
         if (hitFront.collider != null || !grounded) {
-            Debug.Log("Turn Around");
             dir *= -1f;
             animator.TurnAround();
         }
@@ -63,9 +63,9 @@ sealed class Rat : MonoBehaviour
     }
 
     bool checkJumpUp() {
-        var origin = transform.position + new Vector3(dir * 3f, 3f, 0);
-        var hit = Physics2D.Raycast(origin, Vector2.down, 3.1f, LayerMask.GetMask("Environment"));
-        //Debug.DrawRay(origin, Vector2.down * 1.1f, Color.green);
+        var origin = transform.position + new Vector3(dir * 1f, 1f, 0);
+        var hit = Physics2D.Raycast(origin, Vector2.down, 1.1f, LayerMask.GetMask("Environment"));
+        Debug.DrawRay(origin, Vector2.down * 1.1f, Color.green);
         if (hit.collider != null && hit.distance > 0)
             return true;
         return false;
