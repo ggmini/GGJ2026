@@ -8,7 +8,7 @@ sealed class GameManager : MonoBehaviour
     }
 
     public static void LoadNextLevel() {
-        if (SceneManager.GetActiveScene().name == "Level_1") {
+        if (SceneManager.GetActiveScene().name == "Level_1") { //TODO: Use build index and adjust for final level
             SceneManager.LoadScene("MainMenu"); //TODO: End Screen
             return;
         }

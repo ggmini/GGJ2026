@@ -58,7 +58,7 @@ sealed class NewMonoBehaviourScript : MonoBehaviour {
         if (other.gameObject.CompareTag("Player")) {
             var player = other.gameObject.GetComponent<Player>();
             //TODO: Check if player is wearing bunny mask
-            player.TakeDamage(2);
+            player.TakeDamage(2, transform.position.x);
         }
     }
 

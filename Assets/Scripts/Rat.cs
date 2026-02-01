@@ -83,7 +83,7 @@ sealed class Rat : MonoBehaviour
         if (other.gameObject.CompareTag("Player")) {
             var player = other.gameObject.GetComponent<Player>();
             //TODO: Check if player is wearing rat mask
-            player.TakeDamage(1);
+            player.TakeDamage(1, transform.position.x);
         }
     }
 
