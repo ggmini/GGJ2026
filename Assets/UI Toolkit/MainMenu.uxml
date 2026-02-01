@@ -1,8 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Credits" src="project://database/Assets/UI%20Toolkit/Credits.uxml?fileID=9197481963319205126&amp;guid=2ced5afd241f56a44881ec0e9aacecfd&amp;type=3#Credits"/>
     <ui:VisualElement data-source="project://database/Assets/New%20Main%20Menu%20Asset.asset?fileID=11400000&amp;guid=e80cdad0be19ac745bc46e8aa8b36915&amp;type=2#New Main Menu Asset" style="flex-grow: 1;">
-        <Strayfarer.UI.PageView name="" style="align-self: center; flex-grow: 1; justify-content: center;">
-            <ui:VisualElement name="Start">
+        <ui:Label text="Fitting In" style="font-size: 32px; -unity-text-align: upper-center; color: rgb(255, 255, 255); -unity-text-outline-width: 1px;"/>
+        <Strayfarer.UI.PageView name="" style="flex-grow: 1;">
+            <ui:VisualElement name="Start" style="flex-direction: row; flex-wrap: wrap; justify-content: space-evenly;">
                 <Strayfarer.UI.BindableButton on-click="StartLevel1" text="Level 1"/>
                 <Strayfarer.UI.BindableButton on-click="StartLevel2" text="Level 2"/>
                 <Strayfarer.UI.BindableButton on-click="StartLevel3" text="Level 3"/>
