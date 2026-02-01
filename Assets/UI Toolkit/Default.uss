@@ -1,0 +1,13 @@
+.unity-text-element {
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/PixelPurl.ttf?fileID=12800000&guid=30d6b6b6e82f09e47bd4242c7bfe1cac&type=3#PixelPurl");
+    color: rgb(225, 230, 234);
+    text-shadow: 1px 1px 0 rgb(31, 23, 20);
+}
+
+.unity-button {
+    border-left-color: rgb(78, 90, 109);
+    border-right-color: rgb(78, 90, 109);
+    border-top-color: rgb(78, 90, 109);
+    border-bottom-color: rgb(78, 90, 109);
+    background-color: rgb(93, 141, 162);
+}
