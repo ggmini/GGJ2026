@@ -155,13 +155,14 @@ sealed class Player : MonoBehaviour {
 
     void PerformMove() {
         float targetVelocity = moveIntention;
-        if (isSprinting) {
-            targetVelocity *= sprintModifier;
-        }
 
-        if (isCrouching) {
+        if (isCrouching && isSprinting && activeMask == MaskType.Mouse)
+            targetVelocity *= sprintModifier;
+        else if (isCrouching && isSprinting) { }
+        else if (isCrouching)
             targetVelocity *= crouchModifier;
-        }
+        else if (isSprinting)
+            targetVelocity *= sprintModifier;
 
         float smoothTime = (isJumping, Airborne) switch {
             (true, _) => jumpAccelerationTime,
