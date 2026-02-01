@@ -5,7 +5,6 @@ using UnityEngine;
 sealed class Player : MonoBehaviour {
     public static Player instance;
     Rigidbody2D rb;
-    [SerializeField]
     CircleCollider2D upperCollider;
     BoxCollider2D lowerCollider;
     [SerializeField]
@@ -91,6 +90,7 @@ sealed class Player : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         lowerCollider = GetComponent<BoxCollider2D>();
+        upperCollider = GetComponent<CircleCollider2D>();
     }
 
     void FixedUpdate() {
