@@ -43,7 +43,7 @@ sealed class Bunny : MonoBehaviour {
     bool isGrounded() {
         //TODO: Can get stuck on edges
         var origin = transform.position;
-        var offset = new Vector3(modelWidth, -0.5f, 0);
+        var offset = new Vector3(modelWidth, -1f, 0);
         var hitLeft = Physics2D.Raycast(origin + offset, Vector2.down, 0.1f, environmentLayer);
         //Debug.DrawRay(origin + offset, Vector2.down * 0.1f, Color.red);
         offset.x *= -1;
@@ -92,6 +92,6 @@ sealed class Bunny : MonoBehaviour {
         dir *= -1;
         rb.linearVelocityX *= -1f;
         justTurned = true;
-        //TODO: Flip sprite in animator
+        animator.TurnAround();
     }
 }
