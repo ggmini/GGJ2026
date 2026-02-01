@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5296196462307882012}
   - component: {fileID: 4208599858635419775}
   - component: {fileID: 1936097462849894593}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 320
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -139,6 +139,10 @@ PrefabInstance:
     - target: {fileID: 2000582584711332835, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
       propertyPath: m_Name
       value: P_Danger
+      objectReference: {fileID: 0}
+    - target: {fileID: 5662256846034909311, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7724812795473574606, guid: d335dc8158f7e75409b69af7261c1963, type: 3}
       propertyPath: m_LocalPosition.x

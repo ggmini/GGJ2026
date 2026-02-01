@@ -5,7 +5,6 @@ using UnityEngine;
 sealed class Player : MonoBehaviour {
     public static Player instance;
     Rigidbody2D rb;
-    [SerializeField]
     CircleCollider2D upperCollider;
     BoxCollider2D lowerCollider;
     [SerializeField]
@@ -25,7 +24,6 @@ sealed class Player : MonoBehaviour {
     public bool Airborne { get; private set; } = false;
     public bool CanDoubleJump { get; private set; } = false;
     float maxJumpVelocity = 10f;
-    bool crouched = false;
 
     public float MaxJumpTime { get; } = 0.75f;
     float playerWidth = 0.5f;
@@ -91,6 +89,7 @@ sealed class Player : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         lowerCollider = GetComponent<BoxCollider2D>();
+        upperCollider = GetComponent<CircleCollider2D>();
     }
 
     void FixedUpdate() {
@@ -105,7 +104,7 @@ sealed class Player : MonoBehaviour {
             }
         }
 
-        switch ((isJumping, Airborne, crouched, isSprinting, Math.Abs(rb.linearVelocityX))) {
+        switch ((isJumping, Airborne, isCrouching, isSprinting, Math.Abs(rb.linearVelocityX))) {
             case (true, _, false, _, _):
                 IncreaseBunnyMask(1.5f);
                 break;
@@ -214,17 +213,31 @@ sealed class Player : MonoBehaviour {
         lowerCollider.size = new Vector2(1, 0.25f);
         lowerCollider.offset = new Vector2(0, 0.125f);
         animator.isUpright = false;
-        crouched = true;
     }
 
     public void Uncrouch() {
-        isCrouching = false;
-        //TODO: Check for ceiling
-        upperCollider.enabled = true;
-        lowerCollider.size = new Vector2(1, 0.5f);
-        lowerCollider.offset = new Vector2(0, 0.25f);
-        animator.isUpright = true;
-        crouched = false;
+        if (uncrouchCoroutine != null)
+            StopCoroutine(uncrouchCoroutine);
+        uncrouchCoroutine = StartCoroutine(uncrouchRoutine());
+
+    }
+    Coroutine uncrouchCoroutine;
+
+    IEnumerator uncrouchRoutine() {
+        while (isCrouching) {
+            var hit = Physics2D.Raycast(transform.position + new Vector3(0, 1, 0), Vector2.up, 0.1f, environmentLayer);
+            Debug.DrawRay(transform.position + new Vector3(0, 1, 0), Vector2.up * 0.1f, Color.red);
+            if (hit.collider == null) {
+                isCrouching = false;
+                upperCollider.enabled = true;
+                lowerCollider.size = new Vector2(1, 1);
+                lowerCollider.offset = new Vector2(0, 0.5f);
+                animator.isUpright = true;
+                yield break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+
     }
 
     public bool isJumping => rb.linearVelocityY > 0;
