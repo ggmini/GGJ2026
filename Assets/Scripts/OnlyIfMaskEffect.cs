@@ -3,28 +3,30 @@ using Slothsoft.Effects;
 using Slothsoft.UnityExtensions;
 using UnityEngine;
 
-[ImplementationFor(typeof(IEffect), nameof(DamagePlayerEffect))]
+[ImplementationFor(typeof(IEffect), nameof(OnlyIfMaskEffect))]
 [Serializable]
-sealed class DamagePlayerEffect : IEffect {
+sealed class OnlyIfMaskEffect : IEffect {
     [SerializeField]
-    int amount = 1;
+    MaskType requiredMask = MaskType.Default;
     [SerializeField]
-    MaskType immuneMask = MaskType.Unknown;
+    EffectEvent effect = new();
 
     public void Invoke() {
         throw new Exception("can't");
     }
+
     public void Invoke(GameObject context) {
         if (context.TryGetComponent<Player>(out var player)) {
-            if (player.activeMask != immuneMask) {
-                player.TakeDamage(amount);
+            if (player.activeMask == requiredMask) {
+                effect.Invoke(context);
             }
         }
     }
+
     public void Invoke(CollisionInfo collision) {
         if (collision.gameObject.TryGetComponent<Player>(out var player)) {
-            if (player.activeMask != immuneMask) {
-                player.TakeDamage(amount);
+            if (player.activeMask == requiredMask) {
+                effect.Invoke(collision);
             }
         }
     }

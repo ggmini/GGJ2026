@@ -153,27 +153,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: Runtime::CollisionTrigger2D
   onTriggerEnter:
     effects:
-    - rid: 4839056263145062483
-    - rid: 4839056263145062484
+    - rid: 4839056263145062539
   onlyCollideWithPlayer: 1
   references:
     version: 2
     RefIds:
-    - rid: 4839056263145062483
-      type: {class: WaitThenDoEffect, ns: , asm: Runtime}
+    - rid: 4839056263145062539
+      type: {class: OnlyIfMaskEffect, ns: , asm: Runtime}
       data:
+        requiredMask: 0
         effect:
           effects:
-          - rid: 4839056263145062485
-        waitDuration: 1
-    - rid: 4839056263145062484
+          - rid: 4839056263145062540
+          - rid: 4839056263145062541
+    - rid: 4839056263145062540
       type: {class: DestroyGameObjectEffect, ns: , asm: Runtime}
       data: 
-    - rid: 4839056263145062485
-      type: {class: LoadSceneEffect, ns: , asm: Runtime}
+    - rid: 4839056263145062541
+      type: {class: WaitThenDoEffect, ns: , asm: Runtime}
       data:
-        sceneToLoad:
+        waitDuration: 1
+        effect:
+          effects:
+          - rid: 4839056263145062542
+    - rid: 4839056263145062542
+      type: {class: LoadScene, ns: Slothsoft.Effects.Effects, asm: Slothsoft.Effects}
+      data:
+        scene:
           Scene: {fileID: 102900000, guid: c6233b01f2162bf4ea10ac3043f13452, type: 3}
           SceneName: MainMenu
           sceneIndex: 0
           sceneEnabled: 1
+        mode: 0
+        loadAsync: 1
