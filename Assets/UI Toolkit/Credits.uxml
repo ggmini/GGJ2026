@@ -1,5 +1,27 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Default.uss?fileID=7433441132597879392&amp;guid=bea0e48f8b11b6c48ad82483f0649be1&amp;type=3#Default"/>
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:Label text="Color Palette: https://lospec.com/palette-list/twilight-bog"/>
+        <ui:Label text="Credits" class="h2"/>
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Label text="Daniel Schulz" class="h3"/>
+                <ui:VisualElement class="p">
+                    <ui:Label text="2D Art, Programming, Game Design, UI Design"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Label text="Gregory Munro" class="h3"/>
+                <ui:VisualElement class="p">
+                    <ui:Label text="Programming, Game Design, Level Design"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="Third-Party Assets" class="h3"/>
+        <ui:VisualElement class="p" style="flex-direction: row; flex-wrap: wrap;">
+            <ui:Label text="&quot;Twilight Bog&quot; Color Palette by SoundsDotZip&#10;https://lospec.com/palette-list/twilight-bog" style="flex-grow: 1;"/>
+            <ui:Label text="&quot;PixelPurl&quot; Font by HipFonts&#10;https://www.1001fonts.com/pixelpurl-font.html" style="flex-grow: 1;"/>
+            <ui:Label text="Strayfarer UI Package&#10;https://packages.slothsoft.net/-/web/detail/com.strayfarer.ui" style="flex-grow: 1;"/>
+            <ui:Label text="Slothsoft Aseprite Importer&#10;https://packages.slothsoft.net/-/web/detail/net.slothsoft.aseprite" style="flex-grow: 1;"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
