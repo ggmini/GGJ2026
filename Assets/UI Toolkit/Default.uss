@@ -11,3 +11,39 @@
     border-bottom-color: rgb(78, 90, 109);
     background-color: rgb(93, 141, 162);
 }
+
+.h2 {
+    font-size: 28px;
+    -unity-text-align: upper-center;
+    margin-top: 7px;
+    margin-right: 7px;
+    margin-bottom: 7px;
+    margin-left: 7px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.h3 {
+    font-size: 21px;
+    margin-top: 14px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.p {
+    padding-left: 16px;
+}
+
+.p .unity-text-element {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
