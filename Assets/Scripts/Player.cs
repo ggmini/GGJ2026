@@ -106,7 +106,7 @@ sealed class Player : MonoBehaviour {
 
         switch ((isJumping, Airborne, isCrouching, isSprinting, Math.Abs(rb.linearVelocityX))) {
             case (true, _, false, _, _):
-                IncreaseBunnyMask(1.5f);
+                IncreaseBunnyMask(1.25f);
                 break;
             case (_, true, false, _, _):
                 break;
@@ -175,6 +175,10 @@ sealed class Player : MonoBehaviour {
         };
         rb.linearVelocity += gravityScale * Time.deltaTime * Physics2D.gravity;
 
+        if (rb.linearVelocityY < 0) {
+            isJumping = false;
+        }
+
         float moveSign = Math.Sign(moveIntention);
         switch (moveSign) {
             case > 0:
@@ -201,8 +205,11 @@ sealed class Player : MonoBehaviour {
         }
     }
 
+    [SerializeField]
+    float bunnyJumpModifier = 1.5f;
+
     public void Jump() {
-        float modifier = activeMask == MaskType.Bunny ? 2f : 1f;
+        float modifier = activeMask is MaskType.Bunny ? bunnyJumpModifier : 1f;
         rb.linearVelocityY = maxJumpVelocity * modifier;
     }
 
@@ -243,10 +250,11 @@ sealed class Player : MonoBehaviour {
         }
     }
 
-    public bool isJumping => rb.linearVelocityY > 0;
+    public bool isJumping;
 
     public void StartJump() {
         if (!Airborne) {
+            isJumping = true;
             Jump();
             return;
         }
@@ -261,6 +269,7 @@ sealed class Player : MonoBehaviour {
             return;
         }
 
+        isJumping = false;
         rb.linearVelocityY *= 0.25f;
     }
 
@@ -275,6 +284,7 @@ sealed class Player : MonoBehaviour {
     Coroutine RecoverRoutine;
 
     public void TakeDamage(int damage, float sourceXPos) {
+        IncreaseDefaultMask(damage);
         animator.Flash();
         Knockback(sourceXPos);
         if (RecoverRoutine != null) {
