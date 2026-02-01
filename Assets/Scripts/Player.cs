@@ -259,13 +259,33 @@ sealed class Player : MonoBehaviour {
         isSprinting = false;
     }
 
+    Coroutine RecoverRoutine;
+
     public void TakeDamage(int damage) {
         animator.Flash();
-
+        if (RecoverRoutine != null)
+            StopCoroutine(RecoverRoutine);
+        RecoverRoutine = StartCoroutine(RecoverHealth());
         health -= damage;
         if (health <= 0) {
             Die();
         }
+    }
+
+    IEnumerator RecoverHealth() {
+        yield return new WaitForSeconds(5f);  
+        while (health < 10) {
+            yield return new WaitForSeconds(2f);
+            health++;
+            healthToVignette();
+        }
+    }
+
+    void healthToVignette() {
+        float healthPercentage = health / 10f;
+        float vignetteIntensity = 0.3f + (0.2f * (1f - healthPercentage));
+
+
     }
 
     void Die() {
